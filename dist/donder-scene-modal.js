@@ -198,6 +198,9 @@ const ot=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
         padding: 20px;
         box-sizing: border-box;
         padding-bottom: 0;
+        background-color: var(--ha-card-background);
+        color: var(--text-primary-color);
+        border-radius: var(--ha-card-border-radius)
       }
       .donder-widget.nested {
         padding: 0px;
