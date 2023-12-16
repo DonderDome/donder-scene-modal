@@ -112,7 +112,7 @@ export class BoilerplateCard extends LitElement {
         padding: 20px;
         box-sizing: border-box;
         padding-bottom: 0;
-        background-color: var(--secondary-background-color);
+        background-color: transparent;
         color: var(--text-primary-color);
         border-radius: var(--ha-card-border-radius)
       }
