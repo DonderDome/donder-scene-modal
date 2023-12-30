@@ -81,12 +81,12 @@ export class BoilerplateCard extends LitElement {
     };
   }
 
-  protected shouldUpdate(changedProps: PropertyValues): boolean {
+  protected shouldUpdate(): boolean {
     if (!this.config) {
       return false;
     }
 
-    return hasConfigOrEntityChanged(this, changedProps, false);
+    return true;
   }
 
   public connectedCallback() {
