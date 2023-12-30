@@ -413,6 +413,7 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected refreshScene() {
+    console.log("refresh", this._scene)
     this._scene.statuses = [];
     this.requestUpdate('_scene');
   }
