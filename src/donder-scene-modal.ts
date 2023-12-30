@@ -260,6 +260,7 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected handleCheckboxChange(device: any) {
+    console.log("checkbox change", device)
     const { entity } = device
     const index = this._scene.statuses.findIndex(status => status.entity === entity)
 
