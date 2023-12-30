@@ -293,6 +293,12 @@ export class BoilerplateCard extends LitElement {
         groups[group].push(device);
         return groups;
       }, {})
+
+      const typeIconMaps = {
+        'lights': 'lightbulb-outline',
+        'switches': 'toggle-switch-variant-off',
+        'shutters': 'window-shutter',
+      }
     
       return Object.keys(groupedDevices)
         .map(group => {
@@ -319,13 +325,13 @@ export class BoilerplateCard extends LitElement {
                         @click="${() => this.handleCheckboxChange(device)}"
                       >
                         <div class="entity-icon">
-                          <svg-item state=${type}></svg-item>
+                          <ha-icon icon=${`mdi:${typeIconMaps[type]}`}></ha-icon>
                         </div>
                         <div class="entity-name">${name}</div>
                         <div class="entity-status">${status}</div>
                         ${isChecked ? html`
                           <div class="entity-check">
-                            <svg-item state="check"></svg-item>
+                            <ha-icon icon='mdi:check-all'></ha-icon>
                           </div>
                         ` : ''}
                       </div>
@@ -474,7 +480,7 @@ export class BoilerplateCard extends LitElement {
                     hasHold: hasAction(this.config.hold_action),
                   })}
                 >
-                  <svg-item state=${'trash'}></svg-item>
+                  <ha-icon icon='mdi:trash-can-outline'></ha-icon>
                 </button>` : null
               }
               <button
@@ -484,7 +490,7 @@ export class BoilerplateCard extends LitElement {
                   hasHold: hasAction(this.config.hold_action),
                 })}
               >
-                <svg-item state=${'refresh'}></svg-item>
+                <ha-icon icon='mdi:refresh'></ha-icon>
               </button>
             </div>
           </div>
