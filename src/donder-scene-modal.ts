@@ -260,7 +260,7 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected handleCheckboxChange(device: any) {
-    console.log("checkbox change", device)
+    console.log("checkbox change", device, this._scene)
     const { entity } = device
     const index = this._scene.statuses.findIndex(status => status.entity === entity)
 
@@ -281,7 +281,7 @@ export class BoilerplateCard extends LitElement {
         attributes
       })
     }
-
+    console.log("after", this._scene)
     this.requestUpdate('_scene'); 
   }
 
