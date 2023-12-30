@@ -365,7 +365,6 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected closeModal() {
-    console.log(this.config)
     if (this.config.closeModal) {
       this.config.closeModal();
     } else {
