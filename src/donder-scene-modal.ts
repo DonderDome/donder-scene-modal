@@ -102,7 +102,7 @@ export class BoilerplateCard extends LitElement {
 
   static get styles(): CSSResultGroup {
     return css`
-      .type-custom-donder-mode-modal {
+      .type-custom-donder-scene-modal {
         height: 100%;
         width: 100%;
         background: transparent;
