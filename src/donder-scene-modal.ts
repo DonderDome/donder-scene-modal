@@ -105,6 +105,7 @@ export class BoilerplateCard extends LitElement {
       .type-custom-donder-mode-modal {
         height: 100%;
         width: 100%;
+        background: transparent;
       }
       .donder-widget {
         height: 100%;

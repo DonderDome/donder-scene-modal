@@ -191,6 +191,7 @@ const ot=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
       .type-custom-donder-mode-modal {
         height: 100%;
         width: 100%;
+        background: transparent;
       }
       .donder-widget {
         height: 100%;
