@@ -281,7 +281,7 @@ export class BoilerplateCard extends LitElement {
         attributes
       })
     }
-    console.log("after", this._scene)
+    console.log("afterr", this._scene)
     this.requestUpdate('_scene'); 
   }
 
