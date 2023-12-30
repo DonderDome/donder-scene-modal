@@ -106,6 +106,7 @@ export class BoilerplateCard extends LitElement {
         height: 100%;
         width: 100%;
         background: transparent;
+        --mdc-icon-size: 16px;
       }
       .donder-widget {
         height: 100%;
@@ -162,7 +163,7 @@ export class BoilerplateCard extends LitElement {
         display: flex;
         border: 1px solid rgba(255, 255, 255, 0.3);
         border-radius: 5px;
-        padding: 12px 10px 5px;
+        padding: 10px;
         margin-bottom: 10px;
         position: relative;
       }
@@ -296,7 +297,7 @@ export class BoilerplateCard extends LitElement {
 
       const typeIconMaps = {
         'lights': 'lightbulb-outline',
-        'switches': 'toggle-switch-variant-off',
+        'switch': 'toggle-switch-variant-off',
         'shutters': 'window-shutter',
       }
     
