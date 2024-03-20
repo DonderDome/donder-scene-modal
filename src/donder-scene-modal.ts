@@ -476,7 +476,7 @@ export class BoilerplateCard extends LitElement {
     }
 
     const { isNested } = this.config
-    console.log("disabled", this.config.locked ? true : false )
+    console.log("disabled", this.config.locked ? true : false, this.config.locked )
     return html`
       <ha-card
         tabindex="0"
