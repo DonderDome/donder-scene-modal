@@ -476,7 +476,7 @@ export class BoilerplateCard extends LitElement {
     }
 
     const { isNested } = this.config
-
+    console.log("disabled", this.config.locked ? true : false )
     return html`
       <ha-card
         tabindex="0"
@@ -490,7 +490,7 @@ export class BoilerplateCard extends LitElement {
               name="scene-name"
               class="scene-name"
               value="${this._scene.name || ''}"
-              ?disabled=${this.config.locked}
+              ?disabled=${this.config.locked ? true : false}
               @change=${(e: any) => this.updateSceneName(e)}
             />
             <div class='scene-modal-actions'>

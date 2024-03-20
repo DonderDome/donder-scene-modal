@@ -362,7 +362,7 @@ const st=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
       <hui-warning>${t}</hui-warning>
     `}_showError(t){const e=document.createElement("hui-error-card");return e.setConfig({type:"error",error:t,origConfig:this.config}),z`
       ${e}
-    `}render(){if(this.config.show_warning)return this._showWarning("warning message");if(this.config.show_error)return this._showError("error message");const{isNested:t}=this.config;return z`
+    `}render(){if(this.config.show_warning)return this._showWarning("warning message");if(this.config.show_error)return this._showError("error message");const{isNested:t}=this.config;return console.log("disabled",!!this.config.locked),z`
       <ha-card
         tabindex="0"
         .label=${`Boilerplate: ${this.config||"No Entity Defined"}`}
@@ -375,7 +375,7 @@ const st=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
               name="scene-name"
               class="scene-name"
               value="${this._scene.name||""}"
-              ?disabled=${this.config.locked}
+              ?disabled=${!!this.config.locked}
               @change=${t=>this.updateSceneName(t)}
             />
             <div class='scene-modal-actions'>
