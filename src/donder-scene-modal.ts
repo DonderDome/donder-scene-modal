@@ -55,7 +55,6 @@ export class BoilerplateCard extends LitElement {
   @property() config!: any
   @property() event!: any
   @property() callback!: any
-  @property() serviceCall!: any
   @state() protected _active;
   @state() protected _selected = "sunset";
   @state() protected _originalName = null;
@@ -97,6 +96,19 @@ export class BoilerplateCard extends LitElement {
       this._originalName = this.config.scene.name
     } else if (this.config.sceneName) {
       this._scene.name = this.config.sceneName
+    }
+  }
+
+  protected async serviceCall (domain: any, service: any, data: any, callback: any, feedback: any) {
+    try {
+      await this.hass.callService(domain, service, data);
+      callback()
+      if (feedback) {
+        console.log("called")
+        this.hass.callService('browser_mod', 'notification', {message: feedback, duration: 5000, browser_id: localStorage.getItem('browser_mod-browser-id'),})
+      }
+    } catch (error) {
+        this.hass.callService('browser_mod', 'notification', {message: 'Oops, something went wrong..', duration: 5000, browser_id: localStorage.getItem('browser_mod-browser-id'),})
     }
   }
 
@@ -432,7 +444,6 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected refreshScene() {
-    console.log("refresh", this._scene)
     this._scene.statuses = [];
     this.requestUpdate('_scene');
   }
