@@ -487,7 +487,7 @@ export class BoilerplateCard extends LitElement {
     }
 
     const { isNested } = this.config
-
+    console.log("Scene", this._scene);
     return html`
       <ha-card
         tabindex="0"
