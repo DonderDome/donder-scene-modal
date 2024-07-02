@@ -345,7 +345,7 @@ export class BoilerplateCard extends LitElement {
               min="0"
               max="100"
               mode="start"
-              @value-changed=${(e) => console.log("updated")}
+              @value-changed=${() => console.log("updated")}
             ></ha-control-slider>
           </div>
         </div> 
@@ -391,6 +391,8 @@ export class BoilerplateCard extends LitElement {
                   if (sceneable) {
                     if (type === 'shutters')
                       return this.renderShutterEntity(device, checkedClass, isChecked, typeIconMaps)
+                    else
+                      return html``
                   } else {
                     return html ``
                   }})
