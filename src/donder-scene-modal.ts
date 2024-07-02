@@ -236,6 +236,28 @@ export class BoilerplateCard extends LitElement {
         opacity: 0.6;
         margin-right: 10px;
       }
+      .summary-switch-wrapper {
+        /* display: flex; */
+        position: relative;
+        padding: 10px 0 1px;
+        /* font-size: 1.2rem; */
+      }
+      .summary-switch-name {
+        padding-right: 30px;
+        padding-top: 5px;
+        opacity: .8;
+        /* flex: 2; */
+        position: absolute;
+        top: 20px;
+        left: 10px;
+        color: black;
+        z-index: 10;
+        text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+        pointer-events: none;
+      }
+      .summary-switches shutter-slider {
+        flex: 1;
+      }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
           flex: 1 0 100%;
@@ -297,6 +319,40 @@ export class BoilerplateCard extends LitElement {
     this.requestUpdate('_scene'); 
   }
 
+  protected renderShutterEntity(device: any, checkedClass: string, isChecked: boolean, typeIconMaps: any) {
+    const { entity, name, type } = device
+    const percentage = this.hass.states[entity || ''].attributes?.current_position
+    
+    return html`
+      <div class=${"entity "+checkedClass}>
+        <div class="entity-check">
+          <ha-switch
+            .checked=${isChecked}
+            @action=${() => {console.log("checked")}}
+            .actionHandler=${actionHandler({
+              hasHold: hasAction(this.config.hold_action),
+            })}>
+          </ha-switch>
+        </div>
+        <div class='summary-switch-wrapper'>
+          <div class="entity-icon">
+            <ha-icon icon=${`mdi:${typeIconMaps[type]}`}></ha-icon>
+          </div>
+          <div class='summary-switch-name'>${name}</div>
+          <div class='summary-switches'>
+            <ha-control-slider
+              .value=${percentage}
+              min="0"
+              max="100"
+              mode="start"
+              @value-changed=${(e) => console.log("updated")}
+            ></ha-control-slider>
+          </div>
+        </div> 
+      </div>     
+    `
+  }
+
   protected entityGroupComponents() {
     const groupedDevices = this.config.devices
       .reduce((groups, device) => {
@@ -321,35 +377,20 @@ export class BoilerplateCard extends LitElement {
               <div class="scene-modal-group-name">${group}</div>
               <div class="scene-modal-group-content">
                 ${groupedDevices[group].map(device => {
-                  const { entity, name, type, sceneable } = device
+                  const { entity, type, sceneable } = device
                   const index = this._scene.statuses.findIndex(status => status.entity === entity)
                   const isChecked = index >= 0;
                   const checkedClass = isChecked ? 'checked' : ''
-                  const status = isChecked
-                    ? this._scene.statuses[index].type === 'shutters'
-                      ? this._scene.statuses[index].attributes.current_position +'%'
-                      : this._scene.statuses[index].attributes.state
-                    : ''
+                  // const status = isChecked
+                  //   ? this._scene.statuses[index].type === 'shutters'
+                  //     ? this._scene.statuses[index].attributes.current_position +'%'
+                  //     : this._scene.statuses[index].attributes.state
+                  //   : ''
 
 
                   if (sceneable) {
-                    return html`
-                      <div
-                        class=${"entity "+checkedClass}
-                        @click="${() => this.handleCheckboxChange(device)}"
-                      >
-                        <div class="entity-icon">
-                          <ha-icon icon=${`mdi:${typeIconMaps[type]}`}></ha-icon>
-                        </div>
-                        <div class="entity-name">${name}</div>
-                        <div class="entity-status">${status}</div>
-                        ${isChecked ? html`
-                          <div class="entity-check">
-                            <ha-icon icon='mdi:check-all'></ha-icon>
-                          </div>
-                        ` : ''}
-                      </div>
-                    `
+                    if (type === 'shutters')
+                      return this.renderShutterEntity(device, checkedClass, isChecked, typeIconMaps)
                   } else {
                     return html ``
                   }})
@@ -406,7 +447,7 @@ export class BoilerplateCard extends LitElement {
   /** Saves/overrides the data of all scenes */
   protected save() {
     const scenes = this.hass.states['donder_scenes.global']?.attributes
-
+    console.log("save", this._scene)
     if (this._originalName && scenes[this._originalName]) {
       delete scenes[this._originalName]
     }
