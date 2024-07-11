@@ -339,9 +339,9 @@ export class BoilerplateCard extends LitElement {
           </ha-switch>
         </div>
         <div class='summary-switch-wrapper'>
-          <div class="entity-icon">
+          <!-- <div class="entity-icon">
             <ha-icon icon=${`mdi:${typeIconMaps[type]}`}></ha-icon>
-          </div>
+          </div> -->
           <div class='summary-switch-name'>${name}</div>
           <div class='summary-switches'>
             <ha-control-slider
