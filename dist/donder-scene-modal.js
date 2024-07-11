@@ -239,17 +239,17 @@ const nt=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
         font-size: .8em;
       }
       .scene-modal-group-wrapper:nth-child(even) {
-        padding-left: 20px;
+        padding-left: 0px;
       }
       .scene-modal-group-wrapper:nth-child(odd) {
-        padding-right: 20px;
+        padding-right: 10px;
       }
       .entity {
         opacity: 0.5;
-        display: flex;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 5px;
-        padding: 10px;
+        /* display: flex; */
+        /* border: 1px solid rgba(255, 255, 255, 0.3); */
+        /* border-radius: 5px; */
+        padding: 10px 10px 10px 50px;
         margin-bottom: 10px;
         position: relative;
       }
@@ -268,7 +268,8 @@ const nt=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
         width: 18px;
         color: white;
         position: absolute;
-        right: 20px;
+        top: 20px;
+        left: 0px;
       }
       .entity-status {
         font-style: italic;
@@ -312,17 +313,20 @@ const nt=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
       }
       .summary-switch-wrapper {
         /* display: flex; */
-        position: relative;
-        padding: 10px 0 1px;
+        /* position: relative; */
+        /* padding: 10px 0 1px; */
         /* font-size: 1.2rem; */
+        width: 100%;
+        position: relative;
+
       }
       .summary-switch-name {
         padding-right: 30px;
-        padding-top: 5px;
+        /* padding-top: 5px; */
         opacity: .8;
         /* flex: 2; */
         position: absolute;
-        top: 20px;
+        top: 10px;
         left: 10px;
         color: black;
         z-index: 10;
