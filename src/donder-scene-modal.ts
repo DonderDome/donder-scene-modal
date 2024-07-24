@@ -165,25 +165,25 @@ export class BoilerplateCard extends LitElement {
         font-size: .8em;
       }
       .scene-modal-group-wrapper:nth-child(even) {
-        padding-left: 0px;
+        padding-left: 20px;
       }
       .scene-modal-group-wrapper:nth-child(odd) {
-        padding-right: 10px;
+        padding-right: 20px;
       }
       .entity {
-        opacity: 0.5;
+        /* opacity: 0.5; */
         /* display: flex; */
         /* border: 1px solid rgba(255, 255, 255, 0.3); */
         /* border-radius: 5px; */
         padding: 10px 10px 10px 50px;
-        margin-bottom: 10px;
+        /* margin-bottom: 10px; */
         position: relative;
       }
       .entity-name {
         margin-left: 10px;
         font-size: .9em;
       }
-      .entity.checked {
+      .entity.checked .summary-switch-wrapper{
         opacity: 1;
       }
       .entity-icon {
@@ -244,7 +244,7 @@ export class BoilerplateCard extends LitElement {
         /* font-size: 1.2rem; */
         width: 100%;
         position: relative;
-
+        opacity: .5;
       }
       .summary-switch-name {
         padding-right: 30px;
@@ -261,6 +261,12 @@ export class BoilerplateCard extends LitElement {
       }
       .summary-switches shutter-slider {
         flex: 1;
+      }
+      .summary-switch-wrapper ha-control-slider {
+        --control-slider-color: var(--disabled-color);
+      }
+      .entity.checked .summary-switch-wrapper ha-control-slider {
+        --control-slider-color: var(--primary-color);
       }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
@@ -332,7 +338,7 @@ export class BoilerplateCard extends LitElement {
         <div class="entity-check">
           <ha-switch
             .checked=${isChecked}
-            @action=${() => {console.log("checked")}}
+            @action=${() => this.handleCheckboxChange(device)}
             .actionHandler=${actionHandler({
               hasHold: hasAction(this.config.hold_action),
             })}>
