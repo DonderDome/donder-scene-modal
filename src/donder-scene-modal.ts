@@ -190,18 +190,18 @@ export class BoilerplateCard extends LitElement {
       .entity .summary-shutter-name {
         padding-right: 30px;
         /* padding-top: 5px; */
-        opacity: .8;
+        /* opacity: .8; */
         /* flex: 2; */
         position: absolute;
         top: 10px;
         left: 10px;
         color: white;
         z-index: 10;
-        text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+        /* text-shadow: 1px 1px 0px rgba(0,0,0,0.3); */
         pointer-events: none;
       }
       .entity.checked .summary-shutter-name {
-        color: black;
+        color: white;
       }
       .entity-icon {
         width: 18px;
@@ -259,27 +259,10 @@ export class BoilerplateCard extends LitElement {
         position: relative;
         opacity: .5;
       }
-      /* .summary-shutter-wrapper .summary-shutter {
-        border: 2px dashed var(--disabled-color);
-        border-radius: 10px;
-        transform: border 0.1s ease-in-out;
-      }
-      .entity.checked .summary-shutter-wrapper .summary-shutter {
-        --control-slider-color: var(--primary-color);
-        border: 2px dashed transparent;
-        transform: border 0.1s ease-in-out;
-      }
-      .summary-shutter-wrapper .summary-shutter ha-control-slider {
-        opacity: 0;
-        transform: opacity 0.1s ease-in-out;
-      }
-      .entity.checked .summary-shutter-wrapper .summary-shutter ha-control-slider {
-        opacity: 1;
-        transform: opacity 0.1s ease-in-out;
-      } */
       .summary-shutter-wrapper ha-control-slider {
         --control-slider-color: var(--transparent);
         border: 2px dashed var(--disabled-color);
+        --control-slider-background: #fff;
       }
       .entity.checked .summary-shutter-wrapper ha-control-slider {
         --control-slider-color: var(--primary-color);
@@ -321,7 +304,6 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected handleCheckboxChange(device: any) {
-    console.log("checkbox change", device, this._scene)
     const { entity } = device
     const index = this._scene.statuses.findIndex(status => status.entity === entity)
 
@@ -342,11 +324,11 @@ export class BoilerplateCard extends LitElement {
         attributes
       })
     }
-    console.log("afterr", this._scene)
+
     this.requestUpdate('_scene'); 
   }
 
-  protected renderShutterEntity(device: any, checkedClass: string, isChecked: boolean, typeIconMaps: any) {
+  protected renderShutterEntity(device: any, checkedClass: string, isChecked: boolean, typeIconMaps: any, index: number) {
     const { entity, name, type } = device
     const percentage = this.hass.states[entity || ''].attributes?.current_position
     
@@ -372,7 +354,12 @@ export class BoilerplateCard extends LitElement {
               min="0"
               max="100"
               mode="start"
-              @value-changed=${() => console.log("updated")}
+              @value-changed=${(e) => {
+                const target = e.target;
+                const value = (target as HTMLInputElement).value;
+                this._scene.statuses[index].attributes.current_position = value
+                return true;
+              }}
             ></ha-control-slider>
           </div>
         </div> 
@@ -417,7 +404,7 @@ export class BoilerplateCard extends LitElement {
 
                   if (sceneable) {
                     if (type === 'shutters')
-                      return this.renderShutterEntity(device, checkedClass, isChecked, typeIconMaps)
+                      return this.renderShutterEntity(device, checkedClass, isChecked, typeIconMaps, index)
                     else
                       return html``
                   } else {
