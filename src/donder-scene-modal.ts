@@ -184,7 +184,7 @@ export class BoilerplateCard extends LitElement {
         font-size: .9em;
         color: white;
       }
-      .entity.checked .summary-switch-wrapper{
+      .entity.checked .summary-shutter-wrapper{
         opacity: 1;
       }
       .entity .summary-shutter-name {
@@ -254,43 +254,26 @@ export class BoilerplateCard extends LitElement {
         opacity: 0.6;
         margin-right: 10px;
       }
-      .summary-switch-wrapper {
-        /* display: flex; */
-        /* position: relative; */
-        /* padding: 10px 0 1px; */
-        /* font-size: 1.2rem; */
+      .summary-shutter-wrapper {
         width: 100%;
         position: relative;
         opacity: .5;
       }
-      /* .summary-switches shutter-slider {
-        flex: 1;
-      } */
-      /* .summary-switch-wrapper ha-control-slider {
-        --control-slider-color: var(--transparent);
-        --handle-size: 0px !important;
-        border: 2px dashed var(--disabled-color);
-      }
-      .entity.checked .summary-switch-wrapper ha-control-slider {
-        --control-slider-color: var(--primary-color);
-        border: 2px dashed transparent;
-        --handle-size: 4px !important;
-      } */
-      .summary-switch-wrapper .summary-switches {
+      .summary-shutter-wrapper .summary-shutter {
         border: 2px dashed var(--disabled-color);
         border-radius: 10px;
         transform: border 0.1s ease-in-out;
       }
-      .entity.checked .summary-switch-wrapper .summary-switches {
+      .entity.checked .summary-shutter-wrapper .summary-shutter {
         --control-slider-color: var(--primary-color);
         border: 2px dashed transparent;
         transform: border 0.1s ease-in-out;
       }
-      .summary-switch-wrapper .summary-switches ha-control-slider {
+      .summary-shutter-wrapper .summary-shutter ha-control-slider {
         opacity: 0;
         transform: opacity 0.1s ease-in-out;
       }
-      .entity.checked .summary-switch-wrapper .summary-switches ha-control-slider {
+      .entity.checked .summary-shutter-wrapper .summary-shutter ha-control-slider {
         opacity: 1;
         transform: opacity 0.1s ease-in-out;
       }
@@ -370,12 +353,12 @@ export class BoilerplateCard extends LitElement {
             })}>
           </ha-switch>
         </div>
-        <div class='summary-switch-wrapper'>
+        <div class='summary-shutter-wrapper'>
           <!-- <div class="entity-icon">
             <ha-icon icon=${`mdi:${typeIconMaps[type]}`}></ha-icon>
           </div> -->
           <div class='summary-shutter-name'>${name}</div>
-          <div class='summary-switches'>
+          <div class='summary-shutter'>
             <ha-control-slider
               .value=${percentage}
               min="0"
