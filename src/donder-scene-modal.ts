@@ -278,16 +278,21 @@ export class BoilerplateCard extends LitElement {
       } */
       .summary-switch-wrapper .summary-switches {
         border: 2px dashed var(--disabled-color);
+        border-radius: 10px;
+        transform: border 0.1s ease-in-out;
       }
       .entity.checked .summary-switch-wrapper .summary-switches {
         --control-slider-color: var(--primary-color);
         border: 2px dashed transparent;
+        transform: border 0.1s ease-in-out;
       }
       .summary-switch-wrapper .summary-switches ha-control-slider {
         opacity: 0;
+        transform: opacity 0.1s ease-in-out;
       }
       .entity.checked .summary-switch-wrapper .summary-switches ha-control-slider {
         opacity: 1;
+        transform: opacity 0.1s ease-in-out;
       }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
