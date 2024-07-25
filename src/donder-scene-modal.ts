@@ -259,7 +259,7 @@ export class BoilerplateCard extends LitElement {
         position: relative;
         opacity: .5;
       }
-      .summary-shutter-wrapper .summary-shutter {
+      /* .summary-shutter-wrapper .summary-shutter {
         border: 2px dashed var(--disabled-color);
         border-radius: 10px;
         transform: border 0.1s ease-in-out;
@@ -276,6 +276,14 @@ export class BoilerplateCard extends LitElement {
       .entity.checked .summary-shutter-wrapper .summary-shutter ha-control-slider {
         opacity: 1;
         transform: opacity 0.1s ease-in-out;
+      } */
+      .summary-shutter-wrapper ha-control-slider {
+        --control-slider-color: var(--transparent);
+        border: 2px dashed var(--disabled-color);
+      }
+      .entity.checked .summary-shutter-wrapper ha-control-slider {
+        --control-slider-color: var(--primary-color);
+        border: 2px dashed transparent;
       }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
