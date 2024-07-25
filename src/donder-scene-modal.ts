@@ -274,7 +274,7 @@ export class BoilerplateCard extends LitElement {
       .entity.checked .summary-switch-wrapper ha-control-slider {
         --control-slider-color: var(--primary-color);
         border: none;
-        -handle-size: 4px !important;
+        --handle-size: 4px !important;
       }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
