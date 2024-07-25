@@ -187,7 +187,20 @@ export class BoilerplateCard extends LitElement {
       .entity.checked .summary-switch-wrapper{
         opacity: 1;
       }
-      .entity.checked .entity-name {
+      .entity .summary-switch-name {
+        padding-right: 30px;
+        /* padding-top: 5px; */
+        opacity: .8;
+        /* flex: 2; */
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: white;
+        z-index: 10;
+        text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+        pointer-events: none;
+      }
+      .entity.checked .summary-switch-name {
         color: black;
       }
       .entity-icon {
@@ -250,31 +263,31 @@ export class BoilerplateCard extends LitElement {
         position: relative;
         opacity: .5;
       }
-      .summary-switch-name {
-        padding-right: 30px;
-        /* padding-top: 5px; */
-        opacity: .8;
-        /* flex: 2; */
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        color: black;
-        z-index: 10;
-        text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
-        pointer-events: none;
-      }
-      .summary-switches shutter-slider {
+      /* .summary-switches shutter-slider {
         flex: 1;
-      }
-      .summary-switch-wrapper ha-control-slider {
+      } */
+      /* .summary-switch-wrapper ha-control-slider {
         --control-slider-color: var(--transparent);
         --handle-size: 0px !important;
         border: 2px dashed var(--disabled-color);
       }
       .entity.checked .summary-switch-wrapper ha-control-slider {
         --control-slider-color: var(--primary-color);
-        border: none;
+        border: 2px dashed transparent;
         --handle-size: 4px !important;
+      } */
+      .summary-switch-wrapper .summarty-switches {
+        border: 2px dashed var(--disabled-color);
+      }
+      .entity.checked .summary-switch-wrapper .summarty-switches {
+        --control-slider-color: var(--primary-color);
+        border: 2px dashed transparent;
+      }
+      .summary-switch-wrapper .summarty-switches ha-control-slider {
+        opacity: 0;
+      }
+      .entity.checked .summary-switch-wrapper .summarty-switches ha-control-slider {
+        opacity: 1;
       }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
