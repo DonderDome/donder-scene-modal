@@ -268,12 +268,13 @@ export class BoilerplateCard extends LitElement {
       }
       .summary-switch-wrapper ha-control-slider {
         --control-slider-color: var(--transparent);
-        --handle-size: 0px;
+        --handle-size: 0px !important;
         border: 2px dashed var(--disabled-color);
       }
       .entity.checked .summary-switch-wrapper ha-control-slider {
         --control-slider-color: var(--primary-color);
-        border: no-border;
+        border: none;
+        -handle-size: 4px !important;
       }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
