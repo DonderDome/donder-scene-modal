@@ -367,7 +367,7 @@ const nt=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
           padding-right: 0px;
         }
       }
-    `}getSensors(){const{sensors:t}=this.config;return t.map((t=>z`<option value="${t.entity}">${t.name}</option>`))}handleCheckboxChange(t){const{entity:e}=t,i=this._scene.statuses.findIndex((t=>t.entity===e));if(i>-1)this._scene.statuses.splice(i,1);else{const i={};"shutters"===t.type?i.current_position=this.hass.states[e].attributes.current_position:i.state=this.hass.states[e].state,this._scene.statuses.push({entity:e,type:t.type,attributes:i})}this.requestUpdate("_scene")}renderShutterEntity(t,e,i,o,s){var n;const{entity:r,name:a,type:l}=t,c=null===(n=this.hass.states[r||""].attributes)||void 0===n?void 0:n.current_position;return z`
+    `}getSensors(){const{sensors:t}=this.config;return t.map((t=>z`<option value="${t.entity}">${t.name}</option>`))}handleCheckboxChange(t){const{entity:e}=t,i=this._scene.statuses.findIndex((t=>t.entity===e));if(i>-1)this._scene.statuses.splice(i,1);else{const i={};"shutters"===t.type?i.current_position=this.hass.states[e].attributes.current_position:i.state=this.hass.states[e].state,this._scene.statuses.push({entity:e,type:t.type,attributes:i})}this.requestUpdate("_scene")}renderShutterEntity(t,e,i,o,s){var n;const{entity:r,name:a,type:l}=t,c=i?this._scene.statuses[s].attributes.current_position:null===(n=this.hass.states[r||""].attributes)||void 0===n?void 0:n.current_position;return z`
       <div class=${"entity "+e}>
         <div class="entity-check">
           <ha-switch

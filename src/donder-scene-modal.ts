@@ -330,7 +330,9 @@ export class BoilerplateCard extends LitElement {
 
   protected renderShutterEntity(device: any, checkedClass: string, isChecked: boolean, typeIconMaps: any, index: number) {
     const { entity, name, type } = device
-    const percentage = this.hass.states[entity || ''].attributes?.current_position
+    const percentage = isChecked
+      ? this._scene.statuses[index].attributes.current_position
+      : this.hass.states[entity || ''].attributes?.current_position
     
     return html`
       <div class=${"entity "+checkedClass}>
