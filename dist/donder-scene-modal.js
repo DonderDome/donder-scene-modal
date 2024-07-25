@@ -261,7 +261,7 @@ const nt=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
       .entity.checked .summary-switch-wrapper{
         opacity: 1;
       }
-      .entity .summary-switch-name {
+      .entity .summary-shutter-name {
         padding-right: 30px;
         /* padding-top: 5px; */
         opacity: .8;
@@ -274,7 +274,7 @@ const nt=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
         text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
         pointer-events: none;
       }
-      .entity.checked .summary-switch-name {
+      .entity.checked .summary-shutter-name {
         color: black;
       }
       .entity-icon {
@@ -401,7 +401,7 @@ const nt=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
           <!-- <div class="entity-icon">
             <ha-icon icon=${`mdi:${o[a]}`}></ha-icon>
           </div> -->
-          <div class='summary-switch-name'>${r}</div>
+          <div class='summary-shutter-name'>${r}</div>
           <div class='summary-switches'>
             <ha-control-slider
               .value=${l}

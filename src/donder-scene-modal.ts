@@ -187,7 +187,7 @@ export class BoilerplateCard extends LitElement {
       .entity.checked .summary-switch-wrapper{
         opacity: 1;
       }
-      .entity .summary-switch-name {
+      .entity .summary-shutter-name {
         padding-right: 30px;
         /* padding-top: 5px; */
         opacity: .8;
@@ -200,7 +200,7 @@ export class BoilerplateCard extends LitElement {
         text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
         pointer-events: none;
       }
-      .entity.checked .summary-switch-name {
+      .entity.checked .summary-shutter-name {
         color: black;
       }
       .entity-icon {
@@ -369,7 +369,7 @@ export class BoilerplateCard extends LitElement {
           <!-- <div class="entity-icon">
             <ha-icon icon=${`mdi:${typeIconMaps[type]}`}></ha-icon>
           </div> -->
-          <div class='summary-switch-name'>${name}</div>
+          <div class='summary-shutter-name'>${name}</div>
           <div class='summary-switches'>
             <ha-control-slider
               .value=${percentage}
