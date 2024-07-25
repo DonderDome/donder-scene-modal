@@ -182,9 +182,13 @@ export class BoilerplateCard extends LitElement {
       .entity-name {
         margin-left: 10px;
         font-size: .9em;
+        color: white;
       }
       .entity.checked .summary-switch-wrapper{
         opacity: 1;
+      }
+      .entity.checked .entity-name {
+        color: black;
       }
       .entity-icon {
         width: 18px;
@@ -263,10 +267,13 @@ export class BoilerplateCard extends LitElement {
         flex: 1;
       }
       .summary-switch-wrapper ha-control-slider {
-        --control-slider-color: var(--disabled-color);
+        --control-slider-color: var(--transparent);
+        --handle-size: 0px;
+        border: 2px dashed var(--disabled-color);
       }
       .entity.checked .summary-switch-wrapper ha-control-slider {
         --control-slider-color: var(--primary-color);
+        border: no-border;
       }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
