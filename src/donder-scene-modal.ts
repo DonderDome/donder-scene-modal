@@ -356,6 +356,8 @@ export class BoilerplateCard extends LitElement {
               min="0"
               max="100"
               mode="start"
+              show-handle=${false}
+              step="5"
               @value-changed=${(e) => {
                 const target = e.target;
                 const value = (target as HTMLInputElement).value;
