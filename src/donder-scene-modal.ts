@@ -184,8 +184,22 @@ export class BoilerplateCard extends LitElement {
         font-size: .9em;
         color: white;
       }
+      .summary-shutter {
+        position: relative;
+      }
+      .summary-shutter::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        clear: both;
+      }
       .entity.checked .summary-shutter-wrapper{
         opacity: 1;
+      }
+      .entity.checked .summary-shutter::after{
+        display: none;
       }
       .entity .summary-shutter-name {
         padding-right: 30px;
