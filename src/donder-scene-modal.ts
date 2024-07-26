@@ -193,6 +193,8 @@ export class BoilerplateCard extends LitElement {
         position: absolute;
         width: 100%;
         height: 100%;
+        top: 0;
+        left: 0;
         clear: both;
       }
       .entity.checked .summary-shutter-wrapper{
