@@ -352,12 +352,12 @@ export class BoilerplateCard extends LitElement {
           <div class='summary-shutter-name'>${name}</div>
           <div class='summary-shutter'>
             <ha-control-slider
-              .value=${percentage}
+              .value=${isChecked ? percentage : 0}
               min="0"
               max="100"
               mode="start"
-              show-handle=${false}
               step="5"
+              aria-disabled=${isChecked ? false : true}
               @value-changed=${(e) => {
                 const target = e.target;
                 const value = (target as HTMLInputElement).value;
