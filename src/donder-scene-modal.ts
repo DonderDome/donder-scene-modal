@@ -61,6 +61,7 @@ export class BoilerplateCard extends LitElement {
   // @state() protected _checkedEntities = {}; // Store the entity_ids of checked entities
   @state() protected _scene = {
     name: null,
+    group: null,
     statuses: <any[]> [],
   }
 
@@ -96,6 +97,7 @@ export class BoilerplateCard extends LitElement {
       this._originalName = this.config.scene.name
     } else if (this.config.sceneName) {
       this._scene.name = this.config.sceneName
+      this._scene.group = this.config.roomName
     }
   }
 
@@ -484,7 +486,7 @@ export class BoilerplateCard extends LitElement {
   /** Saves/overrides the data of all scenes */
   protected save() {
     const scenes = this.hass.states['donder_scenes.global']?.attributes
-    console.log("save", this._scene)
+
     if (this._originalName && scenes[this._originalName]) {
       delete scenes[this._originalName]
     }
@@ -565,7 +567,7 @@ export class BoilerplateCard extends LitElement {
     }
 
     const { isNested } = this.config
-    console.log("Scene", this._scene);
+
     return html`
       <ha-card
         tabindex="0"
