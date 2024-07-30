@@ -97,6 +97,7 @@ export class BoilerplateCard extends LitElement {
       this._originalName = this.config.scene.name
     } else if (this.config.sceneName) {
       this._scene.name = this.config.sceneName
+    } else if (this.config.roomName) {
       this._scene.group = this.config.roomName
     }
   }
@@ -106,7 +107,6 @@ export class BoilerplateCard extends LitElement {
       await this.hass.callService(domain, service, data);
       callback()
       if (feedback) {
-        console.log("called")
         this.hass.callService('browser_mod', 'notification', {message: feedback, duration: 5000, browser_id: localStorage.getItem('browser_mod-browser-id'),})
       }
     } catch (error) {
@@ -490,7 +490,7 @@ export class BoilerplateCard extends LitElement {
     if (this._originalName && scenes[this._originalName]) {
       delete scenes[this._originalName]
     }
-
+    console.log("saved", this._scene)
     if (this._scene.name) {
       this.serviceCall(
         'donder_scenes',
