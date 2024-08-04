@@ -439,6 +439,26 @@ export class BoilerplateCard extends LitElement {
         })
   }
 
+  protected renderScheduler() {
+    return html`
+      <div class='scheduler-time'>
+        <div class='scheduler-time-clock'></div>
+        <div class='scheduler-time-event'></div>
+      </div>
+      <div class='scheduler-frequency'>
+        <div class='scheduler-day'>
+          <div class='scheduler-day-name'>Monday</div>
+          <ha-switch
+            class='scheduler-day-switch'
+            .checked=${false}
+            @action=${() => console.log('Monday')}
+            .actionHandler=${actionHandler()}>
+          </ha-switch>
+        </div>
+      </div>
+    `
+  }
+
   protected reduceKeys(device) {
     const { type, entity } = device
     const attributes = this.hass.states[entity].attributes
@@ -523,9 +543,11 @@ export class BoilerplateCard extends LitElement {
     }
   }
 
-  protected refreshScene() {
-    this._scene.statuses = [];
-    this.requestUpdate('_scene');
+  protected editSchedule() {
+    // this._scene.statuses = [];
+    // this.requestUpdate('_scene');
+
+
   }
 
   private _showWarning(warning: string): TemplateResult {
@@ -598,12 +620,12 @@ export class BoilerplateCard extends LitElement {
               }
               <button
                 class="button"
-                @action=${this.refreshScene}
+                @action=${this.editSchedule}
                 .actionHandler=${actionHandler({
                   hasHold: hasAction(this.config.hold_action),
                 })}
               >
-                <ha-icon icon='mdi:refresh'></ha-icon>
+                <ha-icon icon='mdi:clock-time-three-outline'></ha-icon>
               </button>
             </div>
           </div>
@@ -611,6 +633,10 @@ export class BoilerplateCard extends LitElement {
           <div class='scene-modal-content'>
             ${this.entityGroupComponents()}
           </div>
+
+          <div class='scene-modal-scheduler'>
+            ${this.renderScheduler()}
+          </div>          
 
           <div class='scene-modal-footer'>
             <button
