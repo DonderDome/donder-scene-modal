@@ -56,7 +56,7 @@ export class BoilerplateCard extends LitElement {
   @property() event!: any
   @property() callback!: any
   @state() protected _active;
-  @state() protected _selected = "sunset";
+  @state() protected _mode = 'content';
   @state() protected _originalName = null;
   // @state() protected _checkedEntities = {}; // Store the entity_ids of checked entities
   @state() protected _scene = {
@@ -286,6 +286,28 @@ export class BoilerplateCard extends LitElement {
         --control-slider-color: var(--primary-color);
         border: 2px dashed transparent;
       }
+      .scene-modal-scheduler {
+        display: flex;
+        margin-bottom: 30px;
+      }
+      .scene-modal-scheduler .scheduler-time,
+      .scene-modal-scheduler .scheduler-frequency {
+        flex: 1;
+      }
+      .scene-modal-scheduler .scheduler-day {
+        display: flex;
+      }
+      .scheduler-frequency .scheduler-day-name {
+        flex: 0 0 150px;
+      }
+      .content .scene-modal-scheduler,
+      .scheduler-time .scene-modal-content {
+        display: none;
+      }
+      .scheduler .scene-modal-actions button {
+        /* background-color: rgba(214, 163, 25, .2);
+        border: 1px solid rgb(214, 163, 25); */
+      }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
           flex: 1 0 100%;
@@ -443,11 +465,66 @@ export class BoilerplateCard extends LitElement {
     return html`
       <div class='scheduler-time'>
         <div class='scheduler-time-clock'></div>
+        <div class='scheduler-time-or'>OR</div>
         <div class='scheduler-time-event'></div>
       </div>
       <div class='scheduler-frequency'>
         <div class='scheduler-day'>
           <div class='scheduler-day-name'>Monday</div>
+          <ha-switch
+            class='scheduler-day-switch'
+            .checked=${false}
+            @action=${() => console.log('Monday')}
+            .actionHandler=${actionHandler()}>
+          </ha-switch>
+        </div>
+        <div class='scheduler-day'>
+          <div class='scheduler-day-name'>Tuesday</div>
+          <ha-switch
+            class='scheduler-day-switch'
+            .checked=${false}
+            @action=${() => console.log('Monday')}
+            .actionHandler=${actionHandler()}>
+          </ha-switch>
+        </div>
+        <div class='scheduler-day'>
+          <div class='scheduler-day-name'>Wednesday</div>
+          <ha-switch
+            class='scheduler-day-switch'
+            .checked=${false}
+            @action=${() => console.log('Monday')}
+            .actionHandler=${actionHandler()}>
+          </ha-switch>
+        </div>
+        <div class='scheduler-day'>
+          <div class='scheduler-day-name'>Thursday</div>
+          <ha-switch
+            class='scheduler-day-switch'
+            .checked=${false}
+            @action=${() => console.log('Monday')}
+            .actionHandler=${actionHandler()}>
+          </ha-switch>
+        </div>
+        <div class='scheduler-day'>
+          <div class='scheduler-day-name'>Friday</div>
+          <ha-switch
+            class='scheduler-day-switch'
+            .checked=${false}
+            @action=${() => console.log('Monday')}
+            .actionHandler=${actionHandler()}>
+          </ha-switch>
+        </div>
+        <div class='scheduler-day'>
+          <div class='scheduler-day-name'>Saturday</div>
+          <ha-switch
+            class='scheduler-day-switch'
+            .checked=${false}
+            @action=${() => console.log('Monday')}
+            .actionHandler=${actionHandler()}>
+          </ha-switch>
+        </div>
+        <div class='scheduler-day'>
+          <div class='scheduler-day-name'>Sunday</div>
           <ha-switch
             class='scheduler-day-switch'
             .checked=${false}
@@ -544,10 +621,7 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected editSchedule() {
-    // this._scene.statuses = [];
-    // this.requestUpdate('_scene');
-
-
+    this._mode = this._mode === 'scheduler' ? 'content' : 'scheduler'
   }
 
   private _showWarning(warning: string): TemplateResult {
@@ -595,7 +669,7 @@ export class BoilerplateCard extends LitElement {
         tabindex="0"
         .label=${`Boilerplate: ${this.config || 'No Entity Defined'}`}
       >
-        <div class=${`donder-widget ${isNested ? 'nested' : ''}`}>
+        <div class=${`donder-widget ${this._mode} ${isNested ? 'nested' : ''}`}>
           <div class='scene-modal-header'>
             Scene:
             <input
