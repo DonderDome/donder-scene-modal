@@ -294,14 +294,34 @@ export class BoilerplateCard extends LitElement {
       .scene-modal-scheduler .scheduler-frequency {
         flex: 1;
       }
+      .scene-modal-scheduler .scheduler-time {
+        flex-direction: column;
+      }
+      .scheduler-time .scheduler-time-clock {
+
+      }
+      .scheduler-time .scheduler-time-or {
+        text-align: center;
+        background: #000;
+        border-bottom: 1px solid #fff;
+        height: 10px;
+        position: relative;
+      }
+      .scheduler-time .scheduler-time-or ::after {
+        content: '';
+      }
+      .scheduler-time .scheduler-time-event {
+
+      }
       .scene-modal-scheduler .scheduler-day {
         display: flex;
+        margin: 20px 0;
       }
       .scheduler-frequency .scheduler-day-name {
         flex: 0 0 150px;
       }
       .content .scene-modal-scheduler,
-      .scheduler-time .scene-modal-content {
+      .scheduler .scene-modal-content {
         display: none;
       }
       .scheduler .scene-modal-actions button {
@@ -464,9 +484,29 @@ export class BoilerplateCard extends LitElement {
   protected renderScheduler() {
     return html`
       <div class='scheduler-time'>
-        <div class='scheduler-time-clock'></div>
+        <div class='scheduler-time-clock'>
+          <ha-time-input
+            .value=${'12:00'}
+            @change=${(e: any) => console.log(e.target.value)}
+            .actionHandler=${actionHandler()}>
+          </ha-time-input>
+          <form>
+            <label for="time">Choose a time:</label>
+            <input type="time" id="time" name="time">
+            <input type="submit">
+        </form>
+        <input type="time" id="time" name="time">
+        </div>
         <div class='scheduler-time-or'>OR</div>
-        <div class='scheduler-time-event'></div>
+        <div class='scheduler-time-event'>
+          <ha-control-select
+            .options=${[{value: 'sunset', label: 'Sunset'}, {value: 'sunrise', label: 'Sunrise'}]}
+            .value=${'sunset'}
+            @value-changed=${(e: any) => console.log(e.target.value)}
+            hide-label
+          >
+          </ha-control-select>
+        </div>
       </div>
       <div class='scheduler-frequency'>
         <div class='scheduler-day'>
