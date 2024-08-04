@@ -490,12 +490,7 @@ export class BoilerplateCard extends LitElement {
             @change=${(e: any) => console.log(e.target.value)}
             .actionHandler=${actionHandler()}>
           </ha-time-input>
-          <form>
-            <label for="time">Choose a time:</label>
-            <input type="time" id="time" name="time">
-            <input type="submit">
-        </form>
-        <input type="time" id="time" name="time">
+          <input type="time" id="time" name="time" onCh>
         </div>
         <div class='scheduler-time-or'>OR</div>
         <div class='scheduler-time-event'>
@@ -503,7 +498,6 @@ export class BoilerplateCard extends LitElement {
             .options=${[{value: 'sunset', label: 'Sunset'}, {value: 'sunrise', label: 'Sunrise'}]}
             .value=${'sunset'}
             @value-changed=${(e: any) => console.log(e.target.value)}
-            hide-label
           >
           </ha-control-select>
         </div>
