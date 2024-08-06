@@ -452,6 +452,27 @@ const ne=(e,t)=>"method"===t.kind&&t.descriptor&&!("value"in t.descriptor)?{...t
           </div>
         </div> 
       </div>     
+    `}renderSwitchEntity(e,t,i,s){const{entity:o,name:n}=e,r=i?this._scene.statuses[s].attributes.state:this.hass.states[o||""].state;return z`
+      <div class=${"entity "+t}>
+        <div class="entity-check">
+          <ha-switch
+            .checked=${i}
+            @action=${()=>this.handleCheckboxChange(e)}
+            .actionHandler=${Te({hasHold:Se(this.config.hold_action)})}>
+          </ha-switch>
+        </div>
+        <div class='summary-shutter-wrapper'>
+          <div class='summary-shutter-name'>${n}</div>
+          <div class='summary-shutter'>
+            <ha-control-select
+              .options=${[{value:"on",label:"On"},{value:"off",label:"Off"}]}
+              .value=${r}
+              @value-changed=${e=>console.log(e.target.value)}
+            >
+            </ha-control-select> 
+          </div>
+        </div> 
+      </div>   
     `}entityGroupComponents(){const e=this.config.devices.reduce(((e,t)=>{const i=t.group;return e[i]||(e[i]=[]),e[i].push(t),e}),{}),t={lights:"lightbulb-outline",switch:"toggle-switch-variant-off",shutters:"window-shutter"};return Object.keys(e).map((i=>z`
             <div class="scene-modal-group-wrapper">
               <div class="scene-modal-group-name">${i}</div>

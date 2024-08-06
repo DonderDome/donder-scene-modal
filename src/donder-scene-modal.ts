@@ -431,6 +431,38 @@ export class BoilerplateCard extends LitElement {
     `
   }
 
+  protected renderSwitchEntity(device: any, checkedClass: string, isChecked: boolean, index: number) {
+    const { entity, name } = device
+    const state = isChecked
+      ? this._scene.statuses[index].attributes.state
+      : this.hass.states[entity || ''].state
+
+    return html`
+      <div class=${"entity "+checkedClass}>
+        <div class="entity-check">
+          <ha-switch
+            .checked=${isChecked}
+            @action=${() => this.handleCheckboxChange(device)}
+            .actionHandler=${actionHandler({
+              hasHold: hasAction(this.config.hold_action),
+            })}>
+          </ha-switch>
+        </div>
+        <div class='summary-shutter-wrapper'>
+          <div class='summary-shutter-name'>${name}</div>
+          <div class='summary-shutter'>
+            <ha-control-select
+              .options=${[{value: 'on', label: 'On'}, {value: 'off', label: 'Off'}]}
+              .value=${state}
+              @value-changed=${(e: any) => console.log(e.target.value)}
+            >
+            </ha-control-select> 
+          </div>
+        </div> 
+      </div>   
+    `
+  }
+
   protected entityGroupComponents() {
     const groupedDevices = this.config.devices
       .reduce((groups, device) => {
