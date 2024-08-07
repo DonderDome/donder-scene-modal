@@ -308,15 +308,40 @@ export class BoilerplateCard extends LitElement {
       .scene-modal-scheduler {
         display: flex;
         margin-bottom: 30px;
+        flex-direction: column;
       }
       .scene-modal-scheduler .scheduler-time,
       .scene-modal-scheduler .scheduler-frequency {
         flex: 1;
       }
-      .scene-modal-scheduler .scheduler-time {
+      .scene-modal-scheduler .scheduler-frequency {
+        display: flex;
         flex-direction: column;
       }
+      .scene-modal-scheduler .scheduler-time {
+        display: flex;
+        /* flex-direction: column; */
+      }
       .scheduler-time .scheduler-time-clock {
+        padding-bottom: 40px;
+        display: flex;
+        justify-content: center;
+      }
+      .scheduler-time .scheduler-time-clock input {
+        background: none;
+        border-width: medium medium 1px;
+        border-style: none none solid;
+        border-color: currentcolor currentcolor rgba(255, 255, 255, 0.3);
+        border-image: none;
+        padding-bottom: 5px;
+        margin-left: 10px;
+        position: relative;
+        top: 2px;
+        font-size: 4em;
+        width: 100px;
+        text-align: center;
+      }
+      .scheduler-time .scheduler-time-clock .schedule-hour::after {
 
       }
       .scheduler-time .scheduler-time-or {
@@ -326,7 +351,7 @@ export class BoilerplateCard extends LitElement {
         height: 10px;
         position: relative;
       }
-      .scheduler-time .scheduler-time-or ::after {
+      .scheduler-time .scheduler-time-or::after {
         content: '';
       }
       .scheduler-time .scheduler-time-event {
@@ -335,6 +360,7 @@ export class BoilerplateCard extends LitElement {
       .scene-modal-scheduler .scheduler-day {
         display: flex;
         margin: 20px 0;
+        flex: 1;
       }
       .scheduler-frequency .scheduler-day-name {
         flex: 0 0 150px;
@@ -646,12 +672,17 @@ export class BoilerplateCard extends LitElement {
       <div class='scheduler-frequency'>
         <div class='scheduler-day'>
           <div class='scheduler-day-name'>Monday</div>
-          <ha-switch
+          <!-- <ha-switch
             class='scheduler-day-switch'
             .checked=${false}
             @action=${() => console.log('Monday')}
             .actionHandler=${actionHandler()}>
-          </ha-switch>
+          </ha-switch> -->
+          <ha-checkbox
+            .checked=${false}
+            @change=${() => console.log('Monday')}
+          >
+          </ha-checkbox>
         </div>
         <div class='scheduler-day'>
           <div class='scheduler-day-name'>Tuesday</div>
