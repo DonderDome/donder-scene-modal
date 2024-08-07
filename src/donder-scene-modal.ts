@@ -229,8 +229,9 @@ export class BoilerplateCard extends LitElement {
         flex: 1;
         display: flex;
         align-items: center;
+        padding-left: 10px;
       }
-      .summary-shutter {
+      .summary-switch {
         flex: 1;
       }
       .entity-icon {
