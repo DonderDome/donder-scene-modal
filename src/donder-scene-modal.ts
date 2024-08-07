@@ -199,7 +199,8 @@ export class BoilerplateCard extends LitElement {
         left: 0;
         clear: both;
       }
-      .entity.checked .summary-shutter-wrapper{
+      .entity.checked .summary-shutter-wrapper,
+      .entity.checked .summary-switch-wrapper {
         opacity: 1;
       }
       .entity.checked .summary-shutter::after{
@@ -220,6 +221,17 @@ export class BoilerplateCard extends LitElement {
       }
       .entity.checked .summary-shutter-name {
         color: white;
+      }
+      .summary-switch-wrapper {
+        display: flex;
+      }
+      .summary-switch-name {
+        flex: 1;
+        display: flex;
+        align-items: center;
+      }
+      .summary-shutter {
+        flex: 1;
       }
       .entity-icon {
         width: 18px;
@@ -272,7 +284,8 @@ export class BoilerplateCard extends LitElement {
         opacity: 0.6;
         margin-right: 10px;
       }
-      .summary-shutter-wrapper {
+      .summary-shutter-wrapper,
+      .summary-switch-wrapper {
         width: 100%;
         position: relative;
         opacity: .5;
@@ -448,9 +461,9 @@ export class BoilerplateCard extends LitElement {
             })}>
           </ha-switch>
         </div>
-        <div class='summary-shutter-wrapper'>
-          <div class='summary-shutter-name'>${name}</div>
-          <div class='summary-shutter'>
+        <div class='summary-switch-wrapper'>
+          <div class='summary-switch-name'>${name}</div>
+          <div class='summary-switch'>
             <ha-control-select
               .options=${[{value: 'on', label: 'On'}, {value: 'off', label: 'Off'}]}
               .value=${state}
