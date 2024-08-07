@@ -468,7 +468,7 @@ export class BoilerplateCard extends LitElement {
             <ha-control-select
               .options=${[{value: 'on', label: 'On'}, {value: 'off', label: 'Off'}]}
               .value=${state}
-              @value-changed=${(e: any) => console.log(e.target.value)}
+              @value-changed=${(e: any) => this._scene.statuses[index].attributes.state = e.target.value}
             >
             </ha-control-select> 
           </div>
