@@ -58,6 +58,9 @@ export class BoilerplateCard extends LitElement {
   @state() protected _active;
   @state() protected _mode = 'content';
   @state() protected _originalName = null;
+  @state() protected _hour = 0;
+  @state() protected _minutes = 0;
+  @state() protected _event = null;
   // @state() protected _checkedEntities = {}; // Store the entity_ids of checked entities
   @state() protected _scene = {
     name: null,
@@ -529,23 +532,80 @@ export class BoilerplateCard extends LitElement {
         })
   }
 
+  protected detectDeviceType() {
+    const ua = navigator.userAgent;
+  
+    // Check if the user agent is a mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+  
+    // Check if the user agent is a tablet
+    const isTablet = /iPad|Android|Touch/i.test(ua) && !/Mobile/i.test(ua);
+  
+    if (isMobile) {
+      if (isTablet) {
+        return 'Tablet';
+      }
+      return 'Mobile';
+    } else {
+      return 'Desktop';
+    }
+  }
+
+  protected updateHour(e: any) {
+    const {value} = e.target
+    if (isNaN(value) || value < 0) {
+      this._hour = 0
+    } else if (value > 23) {
+      this._hour = 23
+    } else {
+      this._hour = e.target.value
+    }
+  }
+
+  protected updateMinutes(e: any) {
+    const {value} = e.target
+    console.log(value)
+    if (isNaN(value) || value < 0) {
+      this._minutes = 0
+    } else if (value > 59) {
+      this._minutes = 59
+    } else {
+      this._minutes = e.target.value
+    }
+  }
+
+  protected updateEvent(e: any) {
+    console.log(e.target.value)
+    this._event = e.target.value
+  }
+
   protected renderScheduler() {
+    
     return html`
       <div class='scheduler-time'>
         <div class='scheduler-time-clock'>
-          <ha-time-input
-            .value=${'12:00'}
-            @change=${(e: any) => console.log(e.target.value)}
-            .actionHandler=${actionHandler()}>
-          </ha-time-input>
-          <input type="time" id="time" name="time" onCh>
+          <input
+            type="text"
+            name="schedule-hour"
+            class="schedule-hour"
+            value="${this._hour}"
+            @change=${(e: any) => this.updateHour(e)}
+          />
+          <input
+            type="text"
+            name="schedule-minutes"
+            class="schedule-minutes"
+            value="${this._minutes}"
+            @change=${(e: any) => this.updateMinutes(e)}
+          />
+          <!-- <input type="time" id="time" name="time"> -->
         </div>
         <div class='scheduler-time-or'>OR</div>
         <div class='scheduler-time-event'>
           <ha-control-select
             .options=${[{value: 'sunset', label: 'Sunset'}, {value: 'sunrise', label: 'Sunrise'}]}
-            .value=${'sunset'}
-            @value-changed=${(e: any) => console.log(e.target.value)}
+            .value=${this._event}
+            @value-changed=${(e: any) => this.updateEvent(e)}
           >
           </ha-control-select>
         </div>
@@ -669,7 +729,7 @@ export class BoilerplateCard extends LitElement {
     if (this._originalName && scenes[this._originalName]) {
       delete scenes[this._originalName]
     }
-    console.log("saved", this._scene)
+
     if (this._scene.name) {
       this.serviceCall(
         'donder_scenes',
