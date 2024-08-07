@@ -502,7 +502,7 @@ export class BoilerplateCard extends LitElement {
                     if (type === 'shutters')
                       return this.renderShutterEntity(device, checkedClass, isChecked, typeIconMaps, index)
                     else
-                      return html``
+                      return this.renderSwitchEntity(device, checkedClass, isChecked, index)
                   } else {
                     return html ``
                   }})
