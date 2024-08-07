@@ -189,7 +189,8 @@ export class BoilerplateCard extends LitElement {
       .summary-shutter {
         position: relative;
       }
-      .summary-shutter::after {
+      .summary-shutter::after,
+      .summary-switch::after {
         content: "";
         display: block;
         position: absolute;
@@ -203,7 +204,8 @@ export class BoilerplateCard extends LitElement {
       .entity.checked .summary-switch-wrapper {
         opacity: 1;
       }
-      .entity.checked .summary-shutter::after{
+      .entity.checked .summary-shutter::after,
+      .entity.checked .summary-switch::after {
         display: none;
       }
       .entity .summary-shutter-name {
