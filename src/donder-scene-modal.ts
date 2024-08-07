@@ -551,27 +551,60 @@ export class BoilerplateCard extends LitElement {
     }
   }
 
-  protected updateHour(e: any) {
-    const {value} = e.target
+  // protected updateHour(e: any) {
+  //   const {value} = e.target
+  //   if (isNaN(value) || value < 0) {
+  //     this._hour = 0
+  //   } else if (value > 23) {
+  //     this._hour = 23
+  //   } else {
+  //     this._hour = e.target.value
+  //   }
+  // }
+
+  // protected updateMinutes(e: any) {
+  //   const {value} = e.target
+  //   console.log(value)
+  //   if (isNaN(value) || value < 0) {
+  //     this._minutes = 0
+  //   } else if (value > 59) {
+  //     this._minutes = 59
+  //   } else {
+  //     this._minutes = e.target.value
+  //   }
+  // }
+
+  private updateHour(e: Event) {
+    const input = e.target as HTMLInputElement;
+    const value = parseInt(input.value, 10);
+    console.log(value);
     if (isNaN(value) || value < 0) {
-      this._hour = 0
+      input.value = '0';
     } else if (value > 23) {
-      this._hour = 23
-    } else {
-      this._hour = e.target.value
+      input.value = '23';
     }
+
+    if (input.value.length === 2) {
+      const minutesInput = this.renderRoot.querySelector('.schedule-minutes') as HTMLInputElement;
+      if (minutesInput) {
+        minutesInput.focus();
+      }
+    }
+
+    this._hour = parseInt(input.value, 10);
   }
 
-  protected updateMinutes(e: any) {
-    const {value} = e.target
-    console.log(value)
+  private updateMinutes(e: Event) {
+    const input = e.target as HTMLInputElement;
+    const value = parseInt(input.value, 10);
+    console.log(value);
     if (isNaN(value) || value < 0) {
-      this._minutes = 0
+      input.value = '0';
     } else if (value > 59) {
-      this._minutes = 59
-    } else {
-      this._minutes = e.target.value
+      input.value = '59';
     }
+
+    this._minutes = parseInt(input.value, 10);
   }
 
   protected updateEvent(e: any) {
@@ -589,14 +622,14 @@ export class BoilerplateCard extends LitElement {
             name="schedule-hour"
             class="schedule-hour"
             value="${this._hour}"
-            @change=${(e: any) => this.updateHour(e)}
+            @input=${this.updateHour}
           />
           <input
             type="text"
             name="schedule-minutes"
             class="schedule-minutes"
             value="${this._minutes}"
-            @change=${(e: any) => this.updateMinutes(e)}
+            @input=${this.updateMinutes}
           />
           <!-- <input type="time" id="time" name="time"> -->
         </div>
