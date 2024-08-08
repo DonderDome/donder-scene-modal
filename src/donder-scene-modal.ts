@@ -316,7 +316,6 @@ export class BoilerplateCard extends LitElement {
       }
       .scene-modal-scheduler .scheduler-frequency {
         display: flex;
-        flex-direction: column;
       }
       .scene-modal-scheduler .scheduler-time {
         display: flex;
@@ -358,12 +357,12 @@ export class BoilerplateCard extends LitElement {
 
       }
       .scene-modal-scheduler .scheduler-day {
-        display: flex;
+        text-align: center;
         margin: 20px 0;
         flex: 1;
       }
       .scheduler-frequency .scheduler-day-name {
-        flex: 0 0 150px;
+        margin-bottom: 20px;
       }
       .content .scene-modal-scheduler,
       .scheduler .scene-modal-content {
@@ -671,21 +670,7 @@ export class BoilerplateCard extends LitElement {
       </div>
       <div class='scheduler-frequency'>
         <div class='scheduler-day'>
-          <div class='scheduler-day-name'>Monday</div>
-          <!-- <ha-switch
-            class='scheduler-day-switch'
-            .checked=${false}
-            @action=${() => console.log('Monday')}
-            .actionHandler=${actionHandler()}>
-          </ha-switch> -->
-          <ha-checkbox
-            .checked=${false}
-            @change=${() => console.log('Monday')}
-          >
-          </ha-checkbox>
-        </div>
-        <div class='scheduler-day'>
-          <div class='scheduler-day-name'>Tuesday</div>
+          <div class='scheduler-day-name'>MON</div>
           <ha-switch
             class='scheduler-day-switch'
             .checked=${false}
@@ -694,7 +679,7 @@ export class BoilerplateCard extends LitElement {
           </ha-switch>
         </div>
         <div class='scheduler-day'>
-          <div class='scheduler-day-name'>Wednesday</div>
+          <div class='scheduler-day-name'>TUE</div>
           <ha-switch
             class='scheduler-day-switch'
             .checked=${false}
@@ -703,7 +688,7 @@ export class BoilerplateCard extends LitElement {
           </ha-switch>
         </div>
         <div class='scheduler-day'>
-          <div class='scheduler-day-name'>Thursday</div>
+          <div class='scheduler-day-name'>WED</div>
           <ha-switch
             class='scheduler-day-switch'
             .checked=${false}
@@ -712,7 +697,7 @@ export class BoilerplateCard extends LitElement {
           </ha-switch>
         </div>
         <div class='scheduler-day'>
-          <div class='scheduler-day-name'>Friday</div>
+          <div class='scheduler-day-name'>THU</div>
           <ha-switch
             class='scheduler-day-switch'
             .checked=${false}
@@ -721,7 +706,7 @@ export class BoilerplateCard extends LitElement {
           </ha-switch>
         </div>
         <div class='scheduler-day'>
-          <div class='scheduler-day-name'>Saturday</div>
+          <div class='scheduler-day-name'>FRI</div>
           <ha-switch
             class='scheduler-day-switch'
             .checked=${false}
@@ -730,7 +715,16 @@ export class BoilerplateCard extends LitElement {
           </ha-switch>
         </div>
         <div class='scheduler-day'>
-          <div class='scheduler-day-name'>Sunday</div>
+          <div class='scheduler-day-name'>SAT</div>
+          <ha-switch
+            class='scheduler-day-switch'
+            .checked=${false}
+            @action=${() => console.log('Monday')}
+            .actionHandler=${actionHandler()}>
+          </ha-switch>
+        </div>
+        <div class='scheduler-day'>
+          <div class='scheduler-day-name'>SUN</div>
           <ha-switch
             class='scheduler-day-switch'
             .checked=${false}
