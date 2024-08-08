@@ -60,7 +60,12 @@ export class BoilerplateCard extends LitElement {
   @state() protected _originalName = null;
   @state() protected _hour = 0;
   @state() protected _minutes = 0;
-  @state() protected _event = null;
+  @state() protected _schedule = {
+    hour: "00",
+    minutes: "00",
+    event: null,
+    days: [{name: "MON", state: false}, {name: "TUE", state: false}, {name: "WED", state: false}, {name: "THU", state: false}, {name: "FRI", state: false}, {name: "SAT", state: false}, {name: "SUN", state: false}]
+  };
   // @state() protected _checkedEntities = {}; // Store the entity_ids of checked entities
   @state() protected _scene = {
     name: null,
@@ -316,6 +321,7 @@ export class BoilerplateCard extends LitElement {
       }
       .scene-modal-scheduler .scheduler-frequency {
         display: flex;
+        justify-content: center;
       }
       .scene-modal-scheduler .scheduler-time {
         display: flex;
@@ -341,7 +347,7 @@ export class BoilerplateCard extends LitElement {
         text-align: center;
       }
       .scheduler-time .scheduler-time-clock .schedule-hour::after {
-
+        content: ':'; 
       }
       .scheduler-time .scheduler-time-or {
         text-align: center;
@@ -350,16 +356,24 @@ export class BoilerplateCard extends LitElement {
         height: 10px;
         position: relative;
       }
-      .scheduler-time .scheduler-time-or::after {
+      .scheduler-time .scheduler-time-clock::after {
         content: '';
       }
-      .scheduler-time .scheduler-time-event {
-
+      .scheduler-time .scheduler-time-event,
+      .scheduler-time .scheduler-time-clock {
+        flex: 1;
       }
       .scene-modal-scheduler .scheduler-day {
         text-align: center;
-        margin: 20px 0;
-        flex: 1;
+        border-radius: 50%;
+        background: var(--disabled-color);
+        height: 40px;
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 40px;
+        margin: 0px 10px;
       }
       .scheduler-frequency .scheduler-day-name {
         margin-bottom: 20px;
@@ -576,29 +590,6 @@ export class BoilerplateCard extends LitElement {
     }
   }
 
-  // protected updateHour(e: any) {
-  //   const {value} = e.target
-  //   if (isNaN(value) || value < 0) {
-  //     this._hour = 0
-  //   } else if (value > 23) {
-  //     this._hour = 23
-  //   } else {
-  //     this._hour = e.target.value
-  //   }
-  // }
-
-  // protected updateMinutes(e: any) {
-  //   const {value} = e.target
-  //   console.log(value)
-  //   if (isNaN(value) || value < 0) {
-  //     this._minutes = 0
-  //   } else if (value > 59) {
-  //     this._minutes = 59
-  //   } else {
-  //     this._minutes = e.target.value
-  //   }
-  // }
-
   private updateHour(e: Event) {
     const input = e.target as HTMLInputElement;
     const value = parseInt(input.value, 10);
@@ -634,11 +625,22 @@ export class BoilerplateCard extends LitElement {
 
   protected updateEvent(e: any) {
     console.log(e.target.value)
-    this._event = e.target.value
+    this._schedule.event = e.target.value
+  }
+
+  protected renderCalendarDays() {
+    return html`
+      ${this._schedule.days.map((day, index) => {
+        return html`
+          <div class='scheduler-day' @click=${() => console.log(`clicked on day ${day} index ${index}`)}>
+            <div class='scheduler-day-name'>${day.name}</div>
+          </div>
+        `
+      })}
+    `
   }
 
   protected renderScheduler() {
-    
     return html`
       <div class='scheduler-time'>
         <div class='scheduler-time-clock'>
@@ -656,82 +658,19 @@ export class BoilerplateCard extends LitElement {
             value="${this._minutes}"
             @input=${this.updateMinutes}
           />
-          <!-- <input type="time" id="time" name="time"> -->
         </div>
         <div class='scheduler-time-or'>OR</div>
         <div class='scheduler-time-event'>
           <ha-control-select
             .options=${[{value: 'sunset', label: 'Sunset'}, {value: 'sunrise', label: 'Sunrise'}]}
-            .value=${this._event}
+            .value=${this._schedule.event}
             @value-changed=${(e: any) => this.updateEvent(e)}
           >
           </ha-control-select>
         </div>
       </div>
       <div class='scheduler-frequency'>
-        <div class='scheduler-day'>
-          <div class='scheduler-day-name'>MON</div>
-          <ha-switch
-            class='scheduler-day-switch'
-            .checked=${false}
-            @action=${() => console.log('Monday')}
-            .actionHandler=${actionHandler()}>
-          </ha-switch>
-        </div>
-        <div class='scheduler-day'>
-          <div class='scheduler-day-name'>TUE</div>
-          <ha-switch
-            class='scheduler-day-switch'
-            .checked=${false}
-            @action=${() => console.log('Monday')}
-            .actionHandler=${actionHandler()}>
-          </ha-switch>
-        </div>
-        <div class='scheduler-day'>
-          <div class='scheduler-day-name'>WED</div>
-          <ha-switch
-            class='scheduler-day-switch'
-            .checked=${false}
-            @action=${() => console.log('Monday')}
-            .actionHandler=${actionHandler()}>
-          </ha-switch>
-        </div>
-        <div class='scheduler-day'>
-          <div class='scheduler-day-name'>THU</div>
-          <ha-switch
-            class='scheduler-day-switch'
-            .checked=${false}
-            @action=${() => console.log('Monday')}
-            .actionHandler=${actionHandler()}>
-          </ha-switch>
-        </div>
-        <div class='scheduler-day'>
-          <div class='scheduler-day-name'>FRI</div>
-          <ha-switch
-            class='scheduler-day-switch'
-            .checked=${false}
-            @action=${() => console.log('Monday')}
-            .actionHandler=${actionHandler()}>
-          </ha-switch>
-        </div>
-        <div class='scheduler-day'>
-          <div class='scheduler-day-name'>SAT</div>
-          <ha-switch
-            class='scheduler-day-switch'
-            .checked=${false}
-            @action=${() => console.log('Monday')}
-            .actionHandler=${actionHandler()}>
-          </ha-switch>
-        </div>
-        <div class='scheduler-day'>
-          <div class='scheduler-day-name'>SUN</div>
-          <ha-switch
-            class='scheduler-day-switch'
-            .checked=${false}
-            @action=${() => console.log('Monday')}
-            .actionHandler=${actionHandler()}>
-          </ha-switch>
-        </div>
+        ${this.renderCalendarDays()}
       </div>
     `
   }
