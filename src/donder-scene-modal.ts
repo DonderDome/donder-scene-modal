@@ -58,6 +58,7 @@ export class BoilerplateCard extends LitElement {
   @state() protected _active;
   @state() protected _mode = 'content';
   @state() protected _originalName = null;
+  @state() protected _hourType = 0;
   @state() protected _schedule = {
     hour: "00",
     minutes: "00",
@@ -604,18 +605,33 @@ export class BoilerplateCard extends LitElement {
     const input = e.target as HTMLInputElement;
     const value = input.value;
     console.log(value);
-    if (parseInt(value) > 23) {
-      input.value = '23';
-    } else {
+    if (this._hourType === 0) {
+      console.log("type 0")
       input.value = value.padStart(2, '0');
-    }
-
-    if (input.value.length === 2) {
+      this._hourType = 1;
+    } else if (this._hourType === 1) {
+      console.log("type 1")
+      if (parseInt(value) > 23) {
+        input.value = '23';
+      }
       const minutesInput = this.renderRoot.querySelector('.schedule-minutes') as HTMLInputElement;
       if (minutesInput) {
         minutesInput.focus();
       }
     }
+
+    // if (parseInt(value) > 23) {
+    //   input.value = '23';
+    // } else {
+    //   input.value = value.padStart(2, '0');
+    // }
+
+    // if (input.value.length === 2) {
+    //   const minutesInput = this.renderRoot.querySelector('.schedule-minutes') as HTMLInputElement;
+    //   if (minutesInput) {
+    //     minutesInput.focus();
+    //   }
+    // }
 
     // this._schedule.hour = parseInt(input.value, 10);
   }
@@ -659,6 +675,10 @@ export class BoilerplateCard extends LitElement {
     if (!/^[0-9]$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Delete') {
       e.preventDefault();
     }
+
+    const input = e.target as HTMLInputElement;
+    const value = input.value;
+    console.log("triggered", value)
   }
 
   protected renderScheduler() {
@@ -671,6 +691,7 @@ export class BoilerplateCard extends LitElement {
             class="schedule-hour"
             value="${this._schedule.hour}"
             @input=${this.updateHour}
+            @focus=${() => this._hourType = 0}
             @keydown=${this.allowOnlyNumbers}
           />
           <span>:</span>
