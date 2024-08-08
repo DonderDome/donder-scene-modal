@@ -601,13 +601,13 @@ export class BoilerplateCard extends LitElement {
     }
   }
 
-  private updateHour(e: Event) {
+  private updateHour(e: any) {
     const input = e.target as HTMLInputElement;
     const value = input.value;
-    console.log(value);
+    console.log(e.key);
     if (this._hourType === 0) {
       console.log("type 0")
-      input.value = value.padStart(2, '0');
+      input.value = e.key.padStart(2, '0');
       this._hourType = 1;
     } else if (this._hourType === 1) {
       console.log("type 1")
@@ -670,15 +670,14 @@ export class BoilerplateCard extends LitElement {
       })}
     `
   }
+  protected resetHourType() {
+    this._hourType = 0;
+  }
 
   private allowOnlyNumbers(e: KeyboardEvent) {
-    if (!/^[0-9]$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Delete') {
+    if (!/^[0-9]$/.test(e.key)) {
       e.preventDefault();
     }
-
-    const input = e.target as HTMLInputElement;
-    const value = input.value;
-    console.log("triggered", value)
   }
 
   protected renderScheduler() {
