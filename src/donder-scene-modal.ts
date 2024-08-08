@@ -602,54 +602,6 @@ export class BoilerplateCard extends LitElement {
     }
   }
 
-  private updateHour(e: any) {
-    const input = e.target as HTMLInputElement;
-    const value = input.value;
-    console.log(e.key);
-    if (this._hourType === 0) {
-      console.log("type 0")
-      input.value = e.key.padStart(2, '0');
-      this._hourType = 1;
-    } else if (this._hourType === 1) {
-      console.log("type 1")
-      if (parseInt(value) > 23) {
-        input.value = '23';
-      }
-      const minutesInput = this.renderRoot.querySelector('.schedule-minutes') as HTMLInputElement;
-      if (minutesInput) {
-        minutesInput.focus();
-      }
-    }
-
-    // if (parseInt(value) > 23) {
-    //   input.value = '23';
-    // } else {
-    //   input.value = value.padStart(2, '0');
-    // }
-
-    // if (input.value.length === 2) {
-    //   const minutesInput = this.renderRoot.querySelector('.schedule-minutes') as HTMLInputElement;
-    //   if (minutesInput) {
-    //     minutesInput.focus();
-    //   }
-    // }
-
-    // this._schedule.hour = parseInt(input.value, 10);
-  }
-
-  private updateMinutes(e: Event) {
-    const input = e.target as HTMLInputElement;
-    const value = parseInt(input.value, 10);
-    console.log(value);
-    if (isNaN(value) || value < 0) {
-      input.value = '0';
-    } else if (value > 59) {
-      input.value = '59';
-    }
-
-    // this._minutes = parseInt(input.value, 10);
-  }
-
   protected updateEvent(e: any) {
     console.log(e.target.value)
     this._schedule.event = e.target.value
@@ -682,20 +634,20 @@ export class BoilerplateCard extends LitElement {
     }
 
     const input = e.target as HTMLInputElement;
-    const value = input.value;
+    const value = e.key;
 
     if (input.name === "schedule-hour") {
       if (this._hourType === 0) {
-        input.value = e.key.padStart(2, '0');
+        input.value = value.padStart(2, '0');
         this._hourType = 1;
-      } else {
-        input.value = (parseInt(value[1] + e.key)).toString().padStart(2, '0');
         this._schedule.hour = input.value;
-        this._hourType = 0;
+      } else {
+        input.value = (input.value.slice(1) + value).padStart(2, '0');
         if (parseInt(input.value) > 23) {
           input.value = '23';
-          this._schedule.hour = '23';
         }
+        this._schedule.hour = input.value;
+        this._hourType = 0;
         const minutesInput = this.renderRoot.querySelector('.schedule-minutes') as HTMLInputElement;
         if (minutesInput) {
           minutesInput.focus();
@@ -703,16 +655,16 @@ export class BoilerplateCard extends LitElement {
       }
     } else if (input.name === "schedule-minutes") {
       if (this._minuteType === 0) {
-        input.value = e.key.padStart(2, '0');
+        input.value = value.padStart(2, '0');
         this._minuteType = 1;
-      } else {
-        input.value = (parseInt(value[1] + e.key)).toString().padStart(2, '0');
         this._schedule.minutes = input.value;
-        this._minuteType = 0;
+      } else {
+        input.value = (input.value.slice(1) + value).padStart(2, '0');
         if (parseInt(input.value) > 59) {
           input.value = '59';
-          this._schedule.minutes = '59';
         }
+        this._schedule.minutes = input.value;
+        this._minuteType = 0;
         input.blur();
       }
     }
@@ -729,6 +681,7 @@ export class BoilerplateCard extends LitElement {
             value="${this._schedule.hour}"
             @focus=${() => this._hourType = 0}
             @keydown=${this.allowOnlyNumbers}
+            maxlength="2"
           />
           <span>:</span>
           <input
@@ -738,6 +691,7 @@ export class BoilerplateCard extends LitElement {
             value="${this._schedule.minutes}"
             @focus=${() => this._minuteType = 0}
             @keydown=${this.allowOnlyNumbers}
+            maxlength="2"
           />
         </div>
         <div class='scheduler-time-or'>OR</div>
