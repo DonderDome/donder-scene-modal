@@ -602,12 +602,12 @@ export class BoilerplateCard extends LitElement {
 
   private updateHour(e: Event) {
     const input = e.target as HTMLInputElement;
-    const value = parseInt(input.value, 10);
+    const value = input.value;
     console.log(value);
-    if (isNaN(value) || value < 0) {
-      input.value = '0';
-    } else if (value > 23) {
+    if (parseInt(value) > 23) {
       input.value = '23';
+    } else {
+      input.value = value.padStart(2, '0');
     }
 
     if (input.value.length === 2) {
@@ -671,7 +671,6 @@ export class BoilerplateCard extends LitElement {
             class="schedule-hour"
             value="${this._schedule.hour}"
             @input=${this.updateHour}
-            maxlength="2"
             @keydown=${this.allowOnlyNumbers}
           />
           <span>:</span>
@@ -681,7 +680,6 @@ export class BoilerplateCard extends LitElement {
             class="schedule-minutes"
             value="${this._schedule.minutes}"
             @input=${this.updateMinutes}
-            maxlength="2"
             @keydown=${this.allowOnlyNumbers}
           />
         </div>
