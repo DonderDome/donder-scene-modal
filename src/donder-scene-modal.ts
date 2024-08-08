@@ -59,6 +59,7 @@ export class BoilerplateCard extends LitElement {
   @state() protected _mode = 'content';
   @state() protected _originalName = null;
   @state() protected _hourType = 0;
+  @state() protected _minuteType = 0;
   @state() protected _schedule = {
     hour: "00",
     minutes: "00",
@@ -677,6 +678,43 @@ export class BoilerplateCard extends LitElement {
   private allowOnlyNumbers(e: KeyboardEvent) {
     if (!/^[0-9]$/.test(e.key)) {
       e.preventDefault();
+      return;
+    }
+
+    const input = e.target as HTMLInputElement;
+    const value = input.value;
+
+    if (input.name === "schedule-hour") {
+      if (this._hourType === 0) {
+        input.value = e.key.padStart(2, '0');
+        this._hourType = 1;
+      } else {
+        input.value = (parseInt(value[1] + e.key)).toString().padStart(2, '0');
+        this._schedule.hour = input.value;
+        this._hourType = 0;
+        if (parseInt(input.value) > 23) {
+          input.value = '23';
+          this._schedule.hour = '23';
+        }
+        const minutesInput = this.renderRoot.querySelector('.schedule-minutes') as HTMLInputElement;
+        if (minutesInput) {
+          minutesInput.focus();
+        }
+      }
+    } else if (input.name === "schedule-minutes") {
+      if (this._minuteType === 0) {
+        input.value = e.key.padStart(2, '0');
+        this._minuteType = 1;
+      } else {
+        input.value = (parseInt(value[1] + e.key)).toString().padStart(2, '0');
+        this._schedule.minutes = input.value;
+        this._minuteType = 0;
+        if (parseInt(input.value) > 59) {
+          input.value = '59';
+          this._schedule.minutes = '59';
+        }
+        input.blur();
+      }
     }
   }
 
@@ -689,7 +727,6 @@ export class BoilerplateCard extends LitElement {
             name="schedule-hour"
             class="schedule-hour"
             value="${this._schedule.hour}"
-            @input=${this.updateHour}
             @focus=${() => this._hourType = 0}
             @keydown=${this.allowOnlyNumbers}
           />
@@ -699,7 +736,7 @@ export class BoilerplateCard extends LitElement {
             name="schedule-minutes"
             class="schedule-minutes"
             value="${this._schedule.minutes}"
-            @input=${this.updateMinutes}
+            @focus=${() => this._minuteType = 0}
             @keydown=${this.allowOnlyNumbers}
           />
         </div>
