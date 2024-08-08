@@ -375,8 +375,8 @@ export class BoilerplateCard extends LitElement {
         flex: 0 0 40px;
         margin: 0px 10px;
       }
-      .scheduler-frequency .scheduler-day-name {
-        margin-bottom: 20px;
+      .scene-modal-scheduler .scheduler-day.active {
+        background-color: var(--primary-color);
       }
       .content .scene-modal-scheduler,
       .scheduler .scene-modal-content {
@@ -628,11 +628,16 @@ export class BoilerplateCard extends LitElement {
     this._schedule.event = e.target.value
   }
 
+  protected updateCalendarDay(index: number) {
+    this._schedule.days[index].state = !this._schedule.days[index].state
+    this.requestUpdate('_schedule'); 
+  }
+
   protected renderCalendarDays() {
     return html`
       ${this._schedule.days.map((day, index) => {
         return html`
-          <div class='scheduler-day' @click=${() => console.log(`clicked on day ${day} index ${index}`)}>
+          <div class=${'scheduler-day '+ day.state ? 'active' : ''} @click=${() => this.updateCalendarDay(index)}>
             <div class='scheduler-day-name'>${day.name}</div>
           </div>
         `
