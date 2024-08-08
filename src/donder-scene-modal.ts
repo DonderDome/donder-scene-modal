@@ -347,7 +347,7 @@ export class BoilerplateCard extends LitElement {
         text-align: center;
       }
       .scheduler-time .scheduler-time-clock .schedule-hour::after {
-        content: ':'; 
+        content: ""; 
       }
       .scheduler-time .scheduler-time-or {
         text-align: center;
