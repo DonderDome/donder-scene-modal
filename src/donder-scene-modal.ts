@@ -637,7 +637,7 @@ export class BoilerplateCard extends LitElement {
     return html`
       ${this._schedule.days.map((day, index) => {
         return html`
-          <div class=${'scheduler-day '+ day.state ? 'active' : ''} @click=${() => this.updateCalendarDay(index)}>
+          <div class=${`scheduler-day ${day.state ? 'active' : ''}`} @click=${() => this.updateCalendarDay(index)}>
             <div class='scheduler-day-name'>${day.name}</div>
           </div>
         `
