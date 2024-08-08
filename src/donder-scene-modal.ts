@@ -58,8 +58,6 @@ export class BoilerplateCard extends LitElement {
   @state() protected _active;
   @state() protected _mode = 'content';
   @state() protected _originalName = null;
-  @state() protected _hour = 0;
-  @state() protected _minutes = 0;
   @state() protected _schedule = {
     hour: "00",
     minutes: "00",
@@ -313,6 +311,7 @@ export class BoilerplateCard extends LitElement {
       .scene-modal-scheduler {
         display: flex;
         margin-bottom: 30px;
+        margin-top: 50px;
         flex-direction: column;
       }
       .scene-modal-scheduler .scheduler-time,
@@ -322,22 +321,24 @@ export class BoilerplateCard extends LitElement {
       .scene-modal-scheduler .scheduler-frequency {
         display: flex;
         justify-content: center;
+        padding: 40px 0;
       }
       .scene-modal-scheduler .scheduler-time {
         display: flex;
-        /* flex-direction: column; */
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 30px;
+        border-bottom: 1px solid var(--disabled-color);
+        padding-bottom: 30px;
       }
       .scheduler-time .scheduler-time-clock {
-        padding-bottom: 40px;
         display: flex;
         justify-content: center;
+        padding: 3px 0;
       }
       .scheduler-time .scheduler-time-clock input {
         background: none;
-        border-width: medium medium 1px;
-        border-style: none none solid;
-        border-color: currentcolor currentcolor rgba(255, 255, 255, 0.3);
-        border-image: none;
+        border: none;
         padding-bottom: 5px;
         margin-left: 10px;
         position: relative;
@@ -351,17 +352,25 @@ export class BoilerplateCard extends LitElement {
       }
       .scheduler-time .scheduler-time-or {
         text-align: center;
-        background: #000;
-        border-bottom: 1px solid #fff;
+        color: var(--disabled-color);
         height: 10px;
         position: relative;
+        margin: 20px;
       }
-      .scheduler-time .scheduler-time-clock::after {
-        content: '';
+      .scheduler-time .scheduler-time-clock span {
+        font-size: 4em;
+        width: 0px;
       }
       .scheduler-time .scheduler-time-event,
       .scheduler-time .scheduler-time-clock {
         flex: 1;
+        background-color: var(--ha-card-background);
+        border-radius: var(--scenery-border-radius);
+        max-width: 300px;
+        align-items: center;
+      }
+      .scheduler-time .scheduler-time-event {
+        padding: 20px;
       }
       .scene-modal-scheduler .scheduler-day {
         text-align: center;
@@ -374,6 +383,7 @@ export class BoilerplateCard extends LitElement {
         align-items: center;
         flex: 0 0 40px;
         margin: 0px 10px;
+        cursor: pointer;
       }
       .scene-modal-scheduler .scheduler-day.active {
         background-color: var(--primary-color);
@@ -607,7 +617,7 @@ export class BoilerplateCard extends LitElement {
       }
     }
 
-    this._hour = parseInt(input.value, 10);
+    // this._schedule.hour = parseInt(input.value, 10);
   }
 
   private updateMinutes(e: Event) {
@@ -620,7 +630,7 @@ export class BoilerplateCard extends LitElement {
       input.value = '59';
     }
 
-    this._minutes = parseInt(input.value, 10);
+    // this._minutes = parseInt(input.value, 10);
   }
 
   protected updateEvent(e: any) {
@@ -645,6 +655,12 @@ export class BoilerplateCard extends LitElement {
     `
   }
 
+  private allowOnlyNumbers(e: KeyboardEvent) {
+    if (!/^[0-9]$/.test(e.key) && e.key !== 'Backspace' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Delete') {
+      e.preventDefault();
+    }
+  }
+
   protected renderScheduler() {
     return html`
       <div class='scheduler-time'>
@@ -653,15 +669,20 @@ export class BoilerplateCard extends LitElement {
             type="text"
             name="schedule-hour"
             class="schedule-hour"
-            value="${this._hour}"
+            value="${this._schedule.hour}"
             @input=${this.updateHour}
+            maxlength="2"
+            @keydown=${this.allowOnlyNumbers}
           />
+          <span>:</span>
           <input
             type="text"
             name="schedule-minutes"
             class="schedule-minutes"
-            value="${this._minutes}"
+            value="${this._schedule.minutes}"
             @input=${this.updateMinutes}
+            maxlength="2"
+            @keydown=${this.allowOnlyNumbers}
           />
         </div>
         <div class='scheduler-time-or'>OR</div>
