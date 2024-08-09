@@ -104,6 +104,7 @@ export class BoilerplateCard extends LitElement {
     if (this.config.scene) {
       this._scene = this.config.scene
       this._originalName = this.config.scene.name
+      this._schedule = this.config.scene.schedule || this._schedule
     } else if (this.config.sceneName) {
       this._scene.name = this.config.sceneName
     } else if (this.config.roomName) {
@@ -422,7 +423,7 @@ export class BoilerplateCard extends LitElement {
       }
       .scheduler-day-summary {
         font-style: italic;
-        margin: 20px 0;
+        margin: 20px 0 0;
         opacity: .6;
         font-size: .8em;
         text-align: center;
@@ -799,6 +800,7 @@ export class BoilerplateCard extends LitElement {
   /** Saves/overrides the data of all scenes */
   protected save() {
     const scenes = this.hass.states['donder_scenes.global']?.attributes
+    const hasSchedule = this._schedule.days.some(day => day.state)
 
     if (this._originalName && scenes[this._originalName]) {
       delete scenes[this._originalName]
@@ -809,7 +811,7 @@ export class BoilerplateCard extends LitElement {
       this.serviceCall(
         'donder_scenes',
         'write',
-        {...scenes, [this._scene.name]: this._scene},
+        {...scenes, [this._scene.name]: {...this._scene, schedule: hasSchedule ? this._schedule : null}},
         () => {
           this._originalName = this._scene.name;
           this.closeModal();
