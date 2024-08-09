@@ -60,11 +60,11 @@ export class BoilerplateCard extends LitElement {
   @state() protected _originalName = null;
   @state() protected _hourType = 0;
   @state() protected _minuteType = 0;
-  @state() protected _scheduleSelection = "";
   @state() protected _schedule = {
     hour: "00",
     minutes: "00",
     event: null,
+    scheduleSelection: "",
     days: [{name: "MON", state: false}, {name: "TUE", state: false}, {name: "WED", state: false}, {name: "THU", state: false}, {name: "FRI", state: false}, {name: "SAT", state: false}, {name: "SUN", state: false}]
   };
   // @state() protected _checkedEntities = {}; // Store the entity_ids of checked entities
@@ -409,13 +409,13 @@ export class BoilerplateCard extends LitElement {
       .scheduler .scene-modal-footer button.back {
         display: block;
       }
-      .scheduler .scene-modal-actions button {
+      .scheduler .scene-modal-actions button.schedule {
         background: var(--disabled-color);
         border-radius: 4px;
         border: none;
         color: var(--ha-card-background);
       }
-      .has-schedule .scene-modal-actions button {
+      .has-schedule .scene-modal-actions button.schedule {
         background-color: rgb(0, 78, 79);
         border-radius: 4px;
         border: 1px solid rgb(97, 236, 189);
@@ -715,8 +715,8 @@ export class BoilerplateCard extends LitElement {
 
   protected renderScheduler() {
     return html`
-      <div class=${`scheduler-time ${this._scheduleSelection}`}>
-        <div class='scheduler-time-clock' @click=${() => this._scheduleSelection = 'time'}>
+      <div class=${`scheduler-time ${this._schedule.scheduleSelection}`}>
+        <div class='scheduler-time-clock' @click=${() => this._schedule.scheduleSelection = 'time'}>
           <input
             type="text"
             name="schedule-hour"
@@ -738,7 +738,7 @@ export class BoilerplateCard extends LitElement {
           />
         </div>
         <div class='scheduler-time-or'>OR</div>
-        <div class='scheduler-time-event' @click=${() => this._scheduleSelection = 'event'}>
+        <div class='scheduler-time-event' @click=${() => this._schedule.scheduleSelection = 'event'}>
           <ha-control-select
             .options=${[{value: 'sunset', label: 'Sunset'}, {value: 'sunrise', label: 'Sunrise'}]}
             .value=${this._schedule.event}
@@ -903,7 +903,7 @@ export class BoilerplateCard extends LitElement {
             <div class='scene-modal-actions'>
               ${!this.config.locked && !this.config.isNew
                 ? html`<button
-                  class="button"
+                  class="button delete"
                   @action=${this.deleteScene}
                   .actionHandler=${actionHandler({
                     hasHold: hasAction(this.config.hold_action),
@@ -913,7 +913,7 @@ export class BoilerplateCard extends LitElement {
                 </button>` : null
               }
               <button
-                class="button"
+                class="button schedule"
                 @action=${this.editSchedule}
                 .actionHandler=${actionHandler({
                   hasHold: hasAction(this.config.hold_action),
