@@ -420,7 +420,13 @@ export class BoilerplateCard extends LitElement {
         border: 1px solid rgb(97, 236, 189);
         color: #fff;
       }
-
+      .scheduler-day-summary {
+        font-style: italic;
+        margin: 20px 0;
+        opacity: .6;
+        font-size: .8em;
+        text-align: center;
+      }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
           flex: 1 0 100%;
@@ -636,7 +642,12 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected renderCalendarDays() {
+    const numDays = this._schedule.days.filter(day => day.state).length
+
     return html`
+      <div class="scheduler-day-summary">
+        ${numDays === 0 ? 'No days selected' : numDays === 7 ? 'Everyday' : numDays === 5 ? 'Weekdays' : numDays === 2 ? 'Weekends' : numDays === 1 ? 'Everyday' : numDays + ' days selected'}
+      </div>
       ${this._schedule.days.map((day, index) => {
         return html`
           <div class=${`scheduler-day ${day.state ? 'active' : ''}`} @click=${() => this.updateCalendarDay(index)}>
@@ -690,26 +701,10 @@ export class BoilerplateCard extends LitElement {
     }
   }
 
-  protected toggleTimeSelection () {
-    if (this._scheduleSelection === 'time') {
-      this._scheduleSelection = ''
-    } else {
-      this._scheduleSelection = 'time'
-    }
-  }
-
-  protected toggleEventSelection () {
-    if (this._scheduleSelection === 'event') {
-      this._scheduleSelection = ''
-    } else {
-      this._scheduleSelection = 'event'
-    }
-  }
-
   protected renderScheduler() {
     return html`
       <div class=${`scheduler-time ${this._scheduleSelection}`}>
-        <div class='scheduler-time-clock' @click=${this.toggleTimeSelection}>
+        <div class='scheduler-time-clock' @click=${() => this._scheduleSelection = 'time'}>
           <input
             type="text"
             name="schedule-hour"
@@ -731,7 +726,7 @@ export class BoilerplateCard extends LitElement {
           />
         </div>
         <div class='scheduler-time-or'>OR</div>
-        <div class='scheduler-time-event' @click=${this.toggleEventSelection}>
+        <div class='scheduler-time-event' @click=${() => this._scheduleSelection = 'event'}>
           <ha-control-select
             .options=${[{value: 'sunset', label: 'Sunset'}, {value: 'sunrise', label: 'Sunrise'}]}
             .value=${this._schedule.event}
