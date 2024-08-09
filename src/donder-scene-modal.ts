@@ -60,6 +60,7 @@ export class BoilerplateCard extends LitElement {
   @state() protected _originalName = null;
   @state() protected _hourType = 0;
   @state() protected _minuteType = 0;
+  @state() protected _scheduleSelection = "";
   @state() protected _schedule = {
     hour: "00",
     minutes: "00",
@@ -367,12 +368,17 @@ export class BoilerplateCard extends LitElement {
       .scheduler-time .scheduler-time-clock {
         flex: 1;
         background-color: var(--ha-card-background);
-        border-radius: var(--scenery-border-radius);
-        /* max-width: 300px; */
+        border-radius: var(--scene-border-radius);
         align-items: center;
+        opacity: .5;
       }
       .scheduler-time .scheduler-time-event {
         padding: 20px;
+      }
+      .scheduler-time.time .scheduler-time-clock,
+      .scheduler-time.event .scheduler-time-event {
+        opacity: 1;
+        border: 2px solid var(--primary-color);
       }
       .scene-modal-scheduler .scheduler-day {
         text-align: center;
@@ -408,10 +414,11 @@ export class BoilerplateCard extends LitElement {
         border: none;
         color: var(--ha-card-background);
       }
-      .scheduler.has-schedule .scene-modal-actions button {
+      .has-schedule .scene-modal-actions button {
         background-color: rgb(0, 78, 79);
         border-radius: 4px;
         border: 1px solid rgb(97, 236, 189);
+        color: #fff;
       }
 
       @media (max-width: 600px) {
@@ -639,9 +646,6 @@ export class BoilerplateCard extends LitElement {
       })}
     `
   }
-  protected resetHourType() {
-    this._hourType = 0;
-  }
 
   private allowOnlyNumbers(e: KeyboardEvent) {
     if (!/^[0-9]$/.test(e.key)) {
@@ -686,10 +690,26 @@ export class BoilerplateCard extends LitElement {
     }
   }
 
+  protected toggleTimeSelection () {
+    if (this._scheduleSelection === 'time') {
+      this._scheduleSelection = ''
+    } else {
+      this._scheduleSelection = 'time'
+    }
+  }
+
+  protected toggleEventSelection () {
+    if (this._scheduleSelection === 'event') {
+      this._scheduleSelection = ''
+    } else {
+      this._scheduleSelection = 'event'
+    }
+  }
+
   protected renderScheduler() {
     return html`
-      <div class='scheduler-time'>
-        <div class='scheduler-time-clock'>
+      <div class=${`scheduler-time ${this._scheduleSelection}`}>
+        <div class='scheduler-time-clock' @click=${this.toggleTimeSelection}>
           <input
             type="text"
             name="schedule-hour"
@@ -711,7 +731,7 @@ export class BoilerplateCard extends LitElement {
           />
         </div>
         <div class='scheduler-time-or'>OR</div>
-        <div class='scheduler-time-event'>
+        <div class='scheduler-time-event' @click=${this.toggleEventSelection}>
           <ha-control-select
             .options=${[{value: 'sunset', label: 'Sunset'}, {value: 'sunrise', label: 'Sunrise'}]}
             .value=${this._schedule.event}
@@ -853,7 +873,7 @@ export class BoilerplateCard extends LitElement {
     }
 
     const { isNested } = this.config
-    const hasSchedule = this._schedule.event || this._schedule.days.some(day => day.state)
+    const hasSchedule = this._schedule.days.some(day => day.state)
 
     return html`
       <ha-card
