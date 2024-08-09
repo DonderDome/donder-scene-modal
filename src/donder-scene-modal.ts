@@ -321,7 +321,7 @@ export class BoilerplateCard extends LitElement {
       .scene-modal-scheduler .scheduler-frequency {
         flex: 1;
       }
-      .scene-modal-scheduler .scheduler-frequency {
+      .scene-modal-scheduler .scheduler-frequency .scheduler-days {
         display: flex;
         justify-content: center;
         padding: 40px 0;
@@ -657,13 +657,15 @@ export class BoilerplateCard extends LitElement {
       <div class="scheduler-day-summary">
         ${selectionMessage}
       </div>
-      ${this._schedule.days.map((day, index) => {
-        return html`
-          <div class=${`scheduler-day ${day.state ? 'active' : ''}`} @click=${() => this.updateCalendarDay(index)}>
-            <div class='scheduler-day-name'>${day.name}</div>
-          </div>
-        `
-      })}
+      <div class="scheduler-days">
+        ${this._schedule.days.map((day, index) => {
+          return html`
+            <div class=${`scheduler-day ${day.state ? 'active' : ''}`} @click=${() => this.updateCalendarDay(index)}>
+              <div class='scheduler-day-name'>${day.name}</div>
+            </div>
+          `
+        })}
+      </div>
     `
   }
 
@@ -803,6 +805,7 @@ export class BoilerplateCard extends LitElement {
     }
 
     if (this._scene.name) {
+      // Add a schedule structure to the scene object and save it accordingly. Make sure that we don't fuck up night/day scene triggers
       this.serviceCall(
         'donder_scenes',
         'write',
