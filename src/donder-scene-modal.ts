@@ -394,10 +394,26 @@ export class BoilerplateCard extends LitElement {
       .scheduler .scene-modal-content {
         display: none;
       }
-      .scheduler .scene-modal-actions button {
-        /* background-color: rgba(214, 163, 25, .2);
-        border: 1px solid rgb(214, 163, 25); */
+      .scheduler .scene-modal-footer button.cancel,
+      .scheduler .scene-modal-footer button.save,
+      .content .scene-modal-footer button.back {
+        display: none;
       }
+      .scheduler .scene-modal-footer button.back {
+        display: block;
+      }
+      .scheduler .scene-modal-actions button {
+        background: var(--disabled-color);
+        border-radius: 4px;
+        border: none;
+        color: var(--ha-card-background);
+      }
+      .scheduler.has-schedule .scene-modal-actions button {
+        background-color: rgb(0, 78, 79);
+        border-radius: 4px;
+        border: 1px solid rgb(97, 236, 189);
+      }
+
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
           flex: 1 0 100%;
@@ -837,13 +853,14 @@ export class BoilerplateCard extends LitElement {
     }
 
     const { isNested } = this.config
+    const hasSchedule = this._schedule.event || this._schedule.days.some(day => day.state)
 
     return html`
       <ha-card
         tabindex="0"
         .label=${`Boilerplate: ${this.config || 'No Entity Defined'}`}
       >
-        <div class=${`donder-widget ${this._mode} ${isNested ? 'nested' : ''}`}>
+        <div class=${`donder-widget ${this._mode} ${isNested ? 'nested' : ''} ${hasSchedule ? 'has-schedule' : ''} `}>
           <div class='scene-modal-header'>
             Scene:
             <input
@@ -894,9 +911,17 @@ export class BoilerplateCard extends LitElement {
                 hasHold: hasAction(this.config.hold_action),
               })}
             >Cancel</button>
+            
+            <button
+              class="button back"
+              @action=${() => this._mode = 'content'}
+              .actionHandler=${actionHandler({
+                hasHold: hasAction(this.config.hold_action),
+              })}
+            >Back</button>
               
             <button
-              class="button"
+              class="button save"
               ?disabled=${!this._scene.name}
               @action=${this._scene.name ? this.save : null}
               .actionHandler=${actionHandler({
