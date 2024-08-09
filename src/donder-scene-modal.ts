@@ -642,11 +642,20 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected renderCalendarDays() {
-    const numDays = this._schedule.days.filter(day => day.state).length
+    const selectedDays = this._schedule.days.filter(day => day.state).map(day => day.name);
+    const selectionMessage = selectedDays.length === 0 ? 'No days selected' :
+      selectedDays.length === 7 ? 'Everyday' :
+      selectedDays.length === 5 && selectedDays.includes('MON') && selectedDays.includes('TUE') && 
+      selectedDays.includes('WED') && selectedDays.includes('THU') && selectedDays.includes('FRI') ?
+      'Weekdays' :
+      selectedDays.length === 2 && selectedDays.includes('SAT') && selectedDays.includes('SUN') ?
+      'Weekends' :
+      `${selectedDays.length} days selected`;
+
 
     return html`
       <div class="scheduler-day-summary">
-        ${numDays === 0 ? 'No days selected' : numDays === 7 ? 'Everyday' : numDays === 5 ? 'Weekdays' : numDays === 2 ? 'Weekends' : numDays === 1 ? 'Everyday' : numDays + ' days selected'}
+        ${selectionMessage}
       </div>
       ${this._schedule.days.map((day, index) => {
         return html`
