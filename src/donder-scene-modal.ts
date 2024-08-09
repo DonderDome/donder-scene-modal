@@ -330,7 +330,7 @@ export class BoilerplateCard extends LitElement {
         justify-content: center;
         align-items: center;
         margin-bottom: 30px;
-        border-bottom: 1px solid var(--disabled-color);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         padding-bottom: 30px;
       }
       .scheduler-time .scheduler-time-clock {
@@ -346,11 +346,11 @@ export class BoilerplateCard extends LitElement {
         position: relative;
         top: 2px;
         font-size: 4em;
-        width: 100px;
+        width: 80px;
         text-align: center;
       }
-      .scheduler-time .scheduler-time-clock .schedule-hour::after {
-        content: ""; 
+      .scheduler-time .scheduler-time-clock input:focus {
+        outline: none;
       }
       .scheduler-time .scheduler-time-or {
         text-align: center;
@@ -368,7 +368,7 @@ export class BoilerplateCard extends LitElement {
         flex: 1;
         background-color: var(--ha-card-background);
         border-radius: var(--scenery-border-radius);
-        max-width: 300px;
+        /* max-width: 300px; */
         align-items: center;
       }
       .scheduler-time .scheduler-time-event {
@@ -377,7 +377,7 @@ export class BoilerplateCard extends LitElement {
       .scene-modal-scheduler .scheduler-day {
         text-align: center;
         border-radius: 50%;
-        background: var(--disabled-color);
+        background: rgba(255, 255, 255, 0.3);
         height: 40px;
         width: 40px;
         display: flex;
