@@ -428,6 +428,9 @@ export class BoilerplateCard extends LitElement {
         font-size: .8em;
         text-align: center;
       }
+      .native-time-input {
+        display: none;
+      }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
           flex: 1 0 100%;
@@ -453,11 +456,11 @@ export class BoilerplateCard extends LitElement {
           padding-right: 0px;
         }
         .scheduler-time-clock {
-          display: none;
+          display: none !important;
         }
 
         .native-time-input {
-          display: block;
+          display: block !important;
         }
       }
     `;
@@ -640,8 +643,8 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected updateEvent(e: any) {
-    console.log(e.target.value)
     this._schedule.event = e.target.value
+    this._schedule.scheduleSelection = 'event'
   }
 
   protected updateCalendarDay(index: number) {
