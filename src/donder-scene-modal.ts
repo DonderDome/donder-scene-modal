@@ -732,7 +732,7 @@ export class BoilerplateCard extends LitElement {
   protected renderScheduler() {
     return html`
       <div class=${`scheduler-time ${this._schedule.scheduleSelection}`}>
-        <div class='scheduler-time-clock' @click=${() => this._schedule.scheduleSelection = 'time'}>
+        <div class='scheduler-time-clock' @click=${() => this._schedule.scheduleSelection = 'time'} @focus=${() => this._schedule.scheduleSelection = 'time'}>
           <input
             type="text"
             name="schedule-hour"
