@@ -452,6 +452,13 @@ export class BoilerplateCard extends LitElement {
         .scene-modal-group-wrapper:nth-child(odd) {
           padding-right: 0px;
         }
+        .scheduler-time-clock {
+          display: none;
+        }
+
+        .native-time-input {
+          display: block;
+        }
       }
     `;
   }
@@ -713,6 +720,12 @@ export class BoilerplateCard extends LitElement {
     }
   }
 
+  protected handleTimeInputChange(event) {
+    const [hour, minutes] = event.target.value.split(':');
+    this._schedule.hour = hour;
+    this._schedule.minutes = minutes;
+  }
+
   protected renderScheduler() {
     return html`
       <div class=${`scheduler-time ${this._schedule.scheduleSelection}`}>
@@ -735,6 +748,14 @@ export class BoilerplateCard extends LitElement {
             @focus=${() => this._minuteType = 0}
             @keydown=${this.allowOnlyNumbers}
             maxlength="2"
+          />
+        </div>
+        <div class="native-time-input">
+          <input
+            type="time"
+            name="schedule-time"
+            value="${`${this._schedule.hour.padStart(2, '0')}:${this._schedule.minutes.padStart(2, '0')}`}"
+            @input=${this.handleTimeInputChange}
           />
         </div>
         <div class='scheduler-time-or'>OR</div>
