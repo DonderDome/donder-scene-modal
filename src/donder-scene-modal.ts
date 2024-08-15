@@ -643,6 +643,7 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected updateEvent(e: any) {
+    console.log("event")
     this._schedule.event = e.target.value
     this._schedule.scheduleSelection = 'event'
   }
@@ -727,6 +728,7 @@ export class BoilerplateCard extends LitElement {
     const [hour, minutes] = event.target.value.split(':');
     this._schedule.hour = hour;
     this._schedule.minutes = minutes;
+    this._schedule.scheduleSelection = 'time'
   }
 
   protected renderScheduler() {
@@ -738,7 +740,7 @@ export class BoilerplateCard extends LitElement {
             name="schedule-hour"
             class="schedule-hour"
             value="${this._schedule.hour}"
-            @focus=${() => this._hourType = 0}
+            @focus=${() => { this._schedule.scheduleSelection = 'time'; this._hourType = 0 }}
             @keydown=${this.allowOnlyNumbers}
             maxlength="2"
           />
@@ -748,7 +750,7 @@ export class BoilerplateCard extends LitElement {
             name="schedule-minutes"
             class="schedule-minutes"
             value="${this._schedule.minutes}"
-            @focus=${() => this._minuteType = 0}
+            @focus=${() => { this._schedule.scheduleSelection = 'time'; this._minuteType = 0 }}
             @keydown=${this.allowOnlyNumbers}
             maxlength="2"
           />
@@ -759,6 +761,7 @@ export class BoilerplateCard extends LitElement {
             name="schedule-time"
             value="${`${this._schedule.hour.padStart(2, '0')}:${this._schedule.minutes.padStart(2, '0')}`}"
             @input=${this.handleTimeInputChange}
+            @focus=${() => this._schedule.scheduleSelection = 'time'}
           />
         </div>
         <div class='scheduler-time-or'>OR</div>
