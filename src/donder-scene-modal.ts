@@ -455,12 +455,14 @@ export class BoilerplateCard extends LitElement {
         .scene-modal-group-wrapper:nth-child(odd) {
           padding-right: 0px;
         }
-        .scheduler-time-clock {
+        /* .scheduler-time-clock {
           display: none !important;
-        }
-
+        } */
         .native-time-input {
-          display: block !important;
+          display: block;
+          visibility: hidden;
+          position: absolute;
+          pointer-events: none;
         }
       }
     `;
@@ -646,6 +648,7 @@ export class BoilerplateCard extends LitElement {
     console.log("event")
     this._schedule.event = e.target.value
     this._schedule.scheduleSelection = 'event'
+    this.requestUpdate('_scene');
   }
 
   protected updateCalendarDay(index: number) {
@@ -729,12 +732,28 @@ export class BoilerplateCard extends LitElement {
     this._schedule.hour = hour;
     this._schedule.minutes = minutes;
     this._schedule.scheduleSelection = 'time'
+    this.requestUpdate('_scene');
+  }
+
+  protected handleSchedulerClick() {
+    const isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    // Trigger a click on the hidden native time input
+    const nativeTimeInput = this.renderRoot.querySelector('input[type="time"]') as HTMLInputElement;
+    if (nativeTimeInput) {
+      nativeTimeInput.click();
+    }
+  } else {
+    // If not mobile, allow default behavior
+    this._schedule.scheduleSelection = 'time';
+  }
   }
 
   protected renderScheduler() {
     return html`
       <div class=${`scheduler-time ${this._schedule.scheduleSelection}`}>
-        <div class='scheduler-time-clock' @click=${() => this._schedule.scheduleSelection = 'time'} @focus=${() => this._schedule.scheduleSelection = 'time'}>
+        <div class='scheduler-time-clock' @click=${this.handleSchedulerClick}>
           <input
             type="text"
             name="schedule-hour"
