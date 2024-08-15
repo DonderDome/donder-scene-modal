@@ -737,17 +737,18 @@ export class BoilerplateCard extends LitElement {
 
   protected handleSchedulerClick() {
     const isMobile = window.innerWidth <= 768;
+    window.alert(isMobile)
 
-  if (isMobile) {
-    // Trigger a click on the hidden native time input
-    const nativeTimeInput = this.renderRoot.querySelector('input[type="time"]') as HTMLInputElement;
-    if (nativeTimeInput) {
-      nativeTimeInput.click();
+    if (isMobile) {
+      // Trigger a click on the hidden native time input
+      const nativeTimeInput = this.renderRoot.querySelector('input[type="time"]') as HTMLInputElement;
+      if (nativeTimeInput) {
+        nativeTimeInput.click();
+      }
+    } else {
+      // If not mobile, allow default behavior
+      this._schedule.scheduleSelection = 'time';
     }
-  } else {
-    // If not mobile, allow default behavior
-    this._schedule.scheduleSelection = 'time';
-  }
   }
 
   protected renderScheduler() {
