@@ -428,9 +428,6 @@ export class BoilerplateCard extends LitElement {
         font-size: .8em;
         text-align: center;
       }
-      .native-time-input {
-        display: none;
-      }
       @media (max-width: 600px) {
         .scene-modal-group-wrapper {
           flex: 1 0 100%;
@@ -455,14 +452,26 @@ export class BoilerplateCard extends LitElement {
         .scene-modal-group-wrapper:nth-child(odd) {
           padding-right: 0px;
         }
-        /* .scheduler-time-clock {
-          display: none !important;
-        } */
-        .native-time-input {
-          display: block;
-          visibility: hidden;
-          position: absolute;
-          pointer-events: none;
+        .scene-modal-scheduler .scheduler-time {
+          flex-direction: column;
+        }
+        .scheduler-time .scheduler-time-event,
+        .scheduler-time .scheduler-time-clock {
+          width: 100%;
+          box-sizing: border-box; 
+        }
+        .scheduler-day-summary {
+          margin: 0;
+        }
+        .scene-modal-scheduler .scheduler-frequency .scheduler-days {
+          padding: 20px 0;
+        }
+        .scene-modal-scheduler .scheduler-day {
+          margin: 0 5px;
+          width: 35px;
+          height: 35px;
+          flex: 0 0 35px;
+          font-size: .8em;
         }
       }
     `;
@@ -625,27 +634,7 @@ export class BoilerplateCard extends LitElement {
         })
   }
 
-  protected detectDeviceType() {
-    const ua = navigator.userAgent;
-  
-    // Check if the user agent is a mobile device
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
-  
-    // Check if the user agent is a tablet
-    const isTablet = /iPad|Android|Touch/i.test(ua) && !/Mobile/i.test(ua);
-  
-    if (isMobile) {
-      if (isTablet) {
-        return 'Tablet';
-      }
-      return 'Mobile';
-    } else {
-      return 'Desktop';
-    }
-  }
-
   protected updateEvent(e: any) {
-    console.log("event")
     this._schedule.event = e.target.value
     this._schedule.scheduleSelection = 'event'
     this.requestUpdate('_scene');
@@ -735,26 +724,10 @@ export class BoilerplateCard extends LitElement {
     this.requestUpdate('_scene');
   }
 
-  protected handleSchedulerClick() {
-    const isMobile = window.innerWidth <= 768;
-    window.alert(isMobile)
-
-    if (isMobile) {
-      // Trigger a click on the hidden native time input
-      const nativeTimeInput = this.renderRoot.querySelector('input[type="time"]') as HTMLInputElement;
-      if (nativeTimeInput) {
-        nativeTimeInput.click();
-      }
-    } else {
-      // If not mobile, allow default behavior
-      this._schedule.scheduleSelection = 'time';
-    }
-  }
-
   protected renderScheduler() {
     return html`
       <div class=${`scheduler-time ${this._schedule.scheduleSelection}`}>
-        <div class='scheduler-time-clock' @click=${this.handleSchedulerClick}>
+        <div class='scheduler-time-clock'>
           <input
             type="text"
             name="schedule-hour"
@@ -773,15 +746,6 @@ export class BoilerplateCard extends LitElement {
             @focus=${() => { this._schedule.scheduleSelection = 'time'; this._minuteType = 0 }}
             @keydown=${this.allowOnlyNumbers}
             maxlength="2"
-          />
-        </div>
-        <div class="native-time-input">
-          <input
-            type="time"
-            name="schedule-time"
-            value="${`${this._schedule.hour.padStart(2, '0')}:${this._schedule.minutes.padStart(2, '0')}`}"
-            @input=${this.handleTimeInputChange}
-            @focus=${() => this._schedule.scheduleSelection = 'time'}
           />
         </div>
         <div class='scheduler-time-or'>OR</div>
