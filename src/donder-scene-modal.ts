@@ -7,6 +7,9 @@ import {
   PropertyValues,
   CSSResultGroup,
 } from 'lit';
+import 'mushroom-card';
+import 'mushroom-light-card';
+import 'mushroom-climate-card';
 import { property, state } from "lit/decorators";
 import {
   HomeAssistant,
@@ -124,359 +127,6 @@ export class BoilerplateCard extends LitElement {
     }
   }
 
-  static get styles(): CSSResultGroup {
-    return css`
-      .type-custom-donder-scene-modal {
-        height: 100%;
-        width: 100%;
-        background: transparent;
-        --mdc-icon-size: 16px;
-      }
-      .donder-widget {
-        height: 100%;
-        width: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-        padding-bottom: 0;
-        background-color: transparent;
-        color: var(--text-primary-color);
-        border-radius: var(--ha-card-border-radius)
-      }
-      .donder-widget.nested {
-        padding: 0px;
-      }
-      .scene-modal-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-      .scene-modal-header input {
-        background: none;
-        border: none;
-        border-bottom: 1px solid rgba(255, 255, 255, .3);
-        padding-bottom: 5px;
-        margin-left: 10px;
-        position: relative;
-        top: 2px;
-        font-size: 1em;
-      }
-      .scene-modal-content {
-        display: flex;
-        max-width: 100%;
-        flex-wrap: wrap;
-      }
-      .scene-modal-group-wrapper {
-        box-sizing: border-box;
-        margin-bottom: 40px;
-        flex: 1 0 50%;
-        max-width: 50%;
-      }
-      .scene-modal-group-wrapper .scene-modal-group-name {
-        opacity: .6;
-        margin-bottom: 10px;
-        font-size: .8em;
-      }
-      .scene-modal-group-wrapper:nth-child(even) {
-        padding-left: 20px;
-      }
-      .scene-modal-group-wrapper:nth-child(odd) {
-        padding-right: 20px;
-      }
-      .entity {
-        /* opacity: 0.5; */
-        /* display: flex; */
-        /* border: 1px solid rgba(255, 255, 255, 0.3); */
-        /* border-radius: 5px; */
-        padding: 10px 10px 10px 50px;
-        /* margin-bottom: 10px; */
-        position: relative;
-      }
-      .entity-name {
-        margin-left: 10px;
-        font-size: .9em;
-        color: white;
-      }
-      .summary-shutter {
-        position: relative;
-      }
-      .summary-shutter::after,
-      .summary-switch::after {
-        content: "";
-        display: block;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        clear: both;
-      }
-      .entity.checked .summary-shutter-wrapper,
-      .entity.checked .summary-switch-wrapper {
-        opacity: 1;
-      }
-      .entity.checked .summary-shutter::after,
-      .entity.checked .summary-switch::after {
-        display: none;
-      }
-      .entity .summary-shutter-name {
-        padding-right: 30px;
-        /* padding-top: 5px; */
-        /* opacity: .8; */
-        /* flex: 2; */
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        color: white;
-        z-index: 10;
-        /* text-shadow: 1px 1px 0px rgba(0,0,0,0.3); */
-        pointer-events: none;
-      }
-      .entity.checked .summary-shutter-name {
-        color: white;
-      }
-      .summary-switch-wrapper {
-        display: flex;
-      }
-      .summary-switch-name {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        padding-left: 10px;
-      }
-      .summary-switch {
-        flex: 1;
-      }
-      .entity-icon {
-        width: 18px;
-        /* color: #ccc; */
-      }
-      .entity-check {
-        width: 18px;
-        color: white;
-        position: absolute;
-        top: 20px;
-        left: 0px;
-      }
-      .entity-status {
-        font-style: italic;
-        opacity: .5;
-        font-size: .9em;
-        margin-left: 10px;
-      }
-      .scene-name {
-        text-transform: uppercase
-      }
-      .scene-modal-footer {
-        display: flex;
-        justify-content: space-between;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        margin: -10px -25px;
-        padding-top: 12px;
-      }
-      .scene-modal-footer button {
-        background: none;
-        border: none;
-        color: rgb(3, 169, 244);
-        font-size: .9em;
-        font-weight: 500;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        text-transform: uppercase;
-      }
-      .scene-modal-footer button.cancel {
-        color: rgb(255, 255, 255, .4);
-      }
-      .scene-modal-actions {
-        position: absolute;
-        right: 10px;
-      }
-      .scene-modal-actions button {
-        width: 48px;
-        padding: 7px 13px;
-        opacity: 0.6;
-        margin-right: 10px;
-      }
-      .summary-shutter-wrapper,
-      .summary-switch-wrapper {
-        width: 100%;
-        position: relative;
-        opacity: .5;
-      }
-      .summary-shutter-wrapper ha-control-slider {
-        --control-slider-color: var(--transparent);
-        border: 2px dashed var(--disabled-color);
-        --control-slider-background: #fff;
-      }
-      .entity.checked .summary-shutter-wrapper ha-control-slider {
-        --control-slider-color: var(--primary-color);
-        border: 2px dashed transparent;
-      }
-      .scene-modal-scheduler {
-        display: flex;
-        margin-bottom: 30px;
-        margin-top: 50px;
-        flex-direction: column;
-      }
-      .scene-modal-scheduler .scheduler-time,
-      .scene-modal-scheduler .scheduler-frequency {
-        flex: 1;
-      }
-      .scene-modal-scheduler .scheduler-frequency .scheduler-days {
-        display: flex;
-        justify-content: center;
-        padding: 40px 0;
-      }
-      .scene-modal-scheduler .scheduler-time {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 30px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        padding-bottom: 30px;
-      }
-      .scheduler-time .scheduler-time-clock {
-        display: flex;
-        justify-content: center;
-        padding: 3px 0;
-      }
-      .scheduler-time .scheduler-time-clock input {
-        background: none;
-        border: none;
-        padding-bottom: 5px;
-        margin-left: 10px;
-        position: relative;
-        top: 2px;
-        font-size: 4em;
-        width: 80px;
-        text-align: center;
-      }
-      .scheduler-time .scheduler-time-clock input:focus {
-        outline: none;
-      }
-      .scheduler-time .scheduler-time-or {
-        text-align: center;
-        color: var(--disabled-color);
-        height: 10px;
-        position: relative;
-        margin: 20px;
-      }
-      .scheduler-time .scheduler-time-clock span {
-        font-size: 4em;
-        width: 0px;
-      }
-      .scheduler-time .scheduler-time-event,
-      .scheduler-time .scheduler-time-clock {
-        flex: 1;
-        background-color: var(--ha-card-background);
-        border-radius: var(--scene-border-radius);
-        align-items: center;
-        opacity: .5;
-      }
-      .scheduler-time .scheduler-time-event {
-        padding: 20px;
-      }
-      .scheduler-time.time .scheduler-time-clock,
-      .scheduler-time.event .scheduler-time-event {
-        opacity: 1;
-        border: 2px solid var(--primary-color);
-      }
-      .scene-modal-scheduler .scheduler-day {
-        text-align: center;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        height: 40px;
-        width: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex: 0 0 40px;
-        margin: 0px 10px;
-        cursor: pointer;
-      }
-      .scene-modal-scheduler .scheduler-day.active {
-        background-color: var(--primary-color);
-      }
-      .content .scene-modal-scheduler,
-      .scheduler .scene-modal-content {
-        display: none;
-      }
-      .scheduler .scene-modal-footer button.cancel,
-      .scheduler .scene-modal-footer button.save,
-      .content .scene-modal-footer button.back {
-        display: none;
-      }
-      .scheduler .scene-modal-footer button.back {
-        display: block;
-      }
-      .scheduler .scene-modal-actions button.schedule {
-        background: var(--disabled-color);
-        border-radius: 4px;
-        border: none;
-        color: var(--ha-card-background);
-      }
-      .has-schedule .scene-modal-actions button.schedule {
-        background-color: rgb(0, 78, 79);
-        border-radius: 4px;
-        border: 1px solid rgb(97, 236, 189);
-        color: #fff;
-      }
-      .scheduler-day-summary {
-        font-style: italic;
-        margin: 20px 0 0;
-        opacity: .6;
-        font-size: .8em;
-        text-align: center;
-      }
-      @media (max-width: 600px) {
-        .scene-modal-group-wrapper {
-          flex: 1 0 100%;
-          max-width: 100%;
-        }
-        .scene-modal-header {
-          flex-direction: column;
-        }
-        .scene-modal-actions {
-          position: initial;
-        }
-        .scene-modal-actions button:nth-child(2) {
-          margin-right: 0px;
-        }
-        .scene-modal-header input {
-          margin-bottom: 20px;
-          text-align: center;
-        }
-        .scene-modal-group-wrapper:nth-child(even) {
-          padding-left: 0px;
-        }
-        .scene-modal-group-wrapper:nth-child(odd) {
-          padding-right: 0px;
-        }
-        .scene-modal-scheduler .scheduler-time {
-          flex-direction: column;
-        }
-        .scheduler-time .scheduler-time-event,
-        .scheduler-time .scheduler-time-clock {
-          width: 100%;
-          box-sizing: border-box; 
-        }
-        .scheduler-day-summary {
-          margin: 0;
-        }
-        .scene-modal-scheduler .scheduler-frequency .scheduler-days {
-          padding: 20px 0;
-        }
-        .scene-modal-scheduler .scheduler-day {
-          margin: 0 5px;
-          width: 35px;
-          height: 35px;
-          flex: 0 0 35px;
-          font-size: .8em;
-        }
-      }
-    `;
-  }
-
   protected getSensors() {
     const { sensors } = this.config
     return sensors.map((sensor: any) => {
@@ -584,6 +234,38 @@ export class BoilerplateCard extends LitElement {
     `
   }
 
+  protected renderClimateEntity(device: any, checkedClass: string, isChecked: boolean, index: number) {
+    const { entity, name } = device
+    const state = isChecked
+      ? this._scene.statuses[index].attributes.state
+      : this.hass.states[entity || ''].state
+
+    return html`
+      <div class=${"entity "+checkedClass}>
+        <div class="entity-check">
+          <ha-switch
+            .checked=${isChecked}
+            @action=${() => this.handleCheckboxChange(device)}
+            .actionHandler=${actionHandler({
+              hasHold: hasAction(this.config.hold_action),
+            })}>
+          </ha-switch>
+        </div>
+        <div class='summary-climate-wrapper'>
+          <div class='summary-climate-name'>${name}</div>
+          <div class='summary-climate'>
+          <mushroom-light-card
+            .hass=${this.hass}
+            .entity=${entity}
+            .title=${this.config?.name || ''}
+            .icon=${"mdi:lightbulb"}
+          ></mushroom-light-card>
+          </div>
+        </div> 
+      </div>   
+    `
+  }
+
   protected entityGroupComponents() {
     const groupedDevices = this.config.devices
       .reduce((groups, device) => {
@@ -599,6 +281,7 @@ export class BoilerplateCard extends LitElement {
         'lights': 'lightbulb-outline',
         'switch': 'toggle-switch-variant-off',
         'shutters': 'window-shutter',
+        'climate': 'thermostat',
       }
     
       return Object.keys(groupedDevices)
@@ -622,12 +305,13 @@ export class BoilerplateCard extends LitElement {
                   if (sceneable) {
                     if (type === 'shutters')
                       return this.renderShutterEntity(device, checkedClass, isChecked, typeIconMaps, index)
-                    else
+                    else if (type === 'switch')
                       return this.renderSwitchEntity(device, checkedClass, isChecked, index)
-                  } else {
-                    return html ``
-                  }})
-                }
+                    else if (type === 'climate')
+                      return this.renderClimateEntity(device, checkedClass, isChecked, index)
+                  }
+                  return html ``
+                })}
               </div>
             </div>
           `
