@@ -74,18 +74,18 @@ export class BoilerplateCard extends LitElement {
     statuses: <any[]> [],
   }
 
-  // Load Mushroom JS dynamically
-  private loadMushroomLibrary() {
-    // Dynamically load the Mushroom JS script
-    const mushroomScript = document.createElement('script');
-    mushroomScript.src = '/hacsfiles/lovelace-mushroom/mushroom.js';
-    document.head.appendChild(mushroomScript);
+  // // Load Mushroom JS dynamically
+  // private loadMushroomLibrary() {
+  //   // Dynamically load the Mushroom JS script
+  //   const mushroomScript = document.createElement('script');
+  //   mushroomScript.src = '/hacsfiles/lovelace-mushroom/mushroom.js';
+  //   document.head.appendChild(mushroomScript);
 
-    mushroomScript.onload = () => {
-      console.log("Mushroom library loaded successfully!");
-      // this.renderMushroomStateItem();
-    };
-  }
+  //   mushroomScript.onload = () => {
+  //     console.log("Mushroom library loaded successfully!");
+  //     // this.renderMushroomStateItem();
+  //   };
+  // }
 
   // // Render Mushroom state item
   // private renderMushroomStateItem() {
@@ -99,10 +99,10 @@ export class BoilerplateCard extends LitElement {
   //   }
   // }
 
-  firstUpdated() {
-    // Load the Mushroom library on first update
-    this.loadMushroomLibrary();
-  }
+  // firstUpdated() {
+  //   // Load the Mushroom library on first update
+  //   this.loadMushroomLibrary();
+  // }
 
   public setConfig(config: BoilerplateCardConfig): void {
     // TODO Check for required fields and that they are of the proper format
