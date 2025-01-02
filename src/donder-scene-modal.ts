@@ -7,9 +7,6 @@ import {
   PropertyValues,
   CSSResultGroup,
 } from 'lit';
-import 'mushroom-card';
-import 'mushroom-light-card';
-import 'mushroom-climate-card';
 import { property, state } from "lit/decorators";
 import {
   HomeAssistant,
@@ -75,6 +72,36 @@ export class BoilerplateCard extends LitElement {
     name: null,
     group: null,
     statuses: <any[]> [],
+  }
+
+  // Load Mushroom JS dynamically
+  private loadMushroomLibrary() {
+    // Dynamically load the Mushroom JS script
+    const mushroomScript = document.createElement('script');
+    mushroomScript.src = '/hacsfiles/lovelace-mushroom/mushroom.js';
+    document.head.appendChild(mushroomScript);
+
+    mushroomScript.onload = () => {
+      console.log("Mushroom library loaded successfully!");
+      // this.renderMushroomStateItem();
+    };
+  }
+
+  // // Render Mushroom state item
+  // private renderMushroomStateItem() {
+  //   const stateItem = document.createElement('mushroom-state-item');
+  //   stateItem.setAttribute('entity', this.entity);
+
+  //   // Append to the shadow DOM or any other element
+  //   const container = this.shadowRoot?.querySelector('.state-item-container');
+  //   if (container) {
+  //     container.appendChild(stateItem);
+  //   }
+  // }
+
+  firstUpdated() {
+    // Load the Mushroom library on first update
+    this.loadMushroomLibrary();
   }
 
   public setConfig(config: BoilerplateCardConfig): void {
@@ -254,6 +281,12 @@ export class BoilerplateCard extends LitElement {
         <div class='summary-climate-wrapper'>
           <div class='summary-climate-name'>${name}</div>
           <div class='summary-climate'>
+          <mushroom-card
+            .hass=${this.hass}
+            .entity=${entity}
+            .title=${this.config?.name || ''}
+            .icon=${"mdi:lightbulb"}
+          ></mushroom-card>
           <mushroom-light-card
             .hass=${this.hass}
             .entity=${entity}

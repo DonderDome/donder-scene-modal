@@ -38,5 +38,8 @@ export default [
       format: 'es',
     },
     plugins: [...plugins],
+    external: [
+      '/hacsfiles/lovelace-mushroom/mushroom.js', // Mark the module as external
+    ],
   },
 ];
